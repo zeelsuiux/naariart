@@ -208,6 +208,8 @@ const Leads = ({ onLogout }) => {
       console.error(err);
       triggerInAppNotification('Update Failed', err.message || 'Could not change lead stage.', 'error');
     }
+  };
+
   // Drag and Drop handlers for Kanban
   const handleDragStart = (e, lead) => {
     setDraggedLead(lead);
