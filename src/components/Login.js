@@ -31,8 +31,8 @@ const Login = ({ onLogin }) => {
       // Call parent onLogin callback
       onLogin();
       
-      // Redirect to settings page
-      navigate('/settings');
+      // Redirect to home page
+      navigate('/');
       
     } catch (err) {
       console.log('Login error:', err);
