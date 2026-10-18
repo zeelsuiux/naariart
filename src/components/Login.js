@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles.css';
 import { authAPI } from '../services/api';
@@ -12,6 +12,12 @@ const Login = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (storage.isAuthenticated()) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,8 +37,8 @@ const Login = ({ onLogin }) => {
       // Call parent onLogin callback
       onLogin();
       
-      // Redirect to home page
-      navigate('/');
+      // Redirect to dashboard page
+      navigate('/dashboard');
       
     } catch (err) {
       console.log('Login error:', err);
