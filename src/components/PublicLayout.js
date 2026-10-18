@@ -48,6 +48,9 @@ const PublicLayout = ({ children }) => {
             <NavLink to="/product" className={({ isActive }) => (isActive ? 'active' : '')}>
               Collection
             </NavLink>
+            <NavLink to="/collaborate" className={({ isActive }) => (isActive ? 'active' : '')}>
+              Collaborate
+            </NavLink>
             <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>
               Atelier & Contact
             </NavLink>
@@ -78,26 +81,49 @@ const PublicLayout = ({ children }) => {
               <div className="public-mobile-drawer-header">
                 <div className="public-brand">
                   <img src={logoImg} alt="Naari Art" className="public-brand-logo" />
-                  <span className="public-brand-name">Naari Art</span>
+                  <div className="public-brand-copy">
+                    <span className="public-brand-name">Naari Art</span>
+                    <span className="public-brand-tagline">Elegance of Art</span>
+                  </div>
                 </div>
-                <button type="button" className="public-drawer-close" onClick={closeMobileNav}>
-                  <FiX size={22} />
+                <button type="button" className="public-drawer-close" onClick={closeMobileNav} aria-label="Close menu">
+                  <FiX size={24} />
                 </button>
               </div>
 
               <div className="public-mobile-links">
-                <NavLink to="/" end onClick={closeMobileNav}>Home</NavLink>
-                <NavLink to="/about" onClick={closeMobileNav}>About Us</NavLink>
-                <NavLink to="/product" onClick={closeMobileNav}>Collection</NavLink>
-                <NavLink to="/contact" onClick={closeMobileNav}>Atelier & Contact</NavLink>
+                <NavLink to="/" end onClick={closeMobileNav}>
+                  Home
+                </NavLink>
+                <NavLink to="/about" onClick={closeMobileNav}>
+                  About Us
+                </NavLink>
+                <NavLink to="/product" onClick={closeMobileNav}>
+                  Collection & Outfits
+                </NavLink>
+                <NavLink to="/collaborate" onClick={closeMobileNav} style={{ color: 'var(--pub-primary)', fontWeight: '700' }}>
+                  ★ Creator Collaboration
+                </NavLink>
+                <NavLink to="/contact" onClick={closeMobileNav}>
+                  Atelier & Contact
+                </NavLink>
               </div>
 
-              <div className="public-mobile-footer">
-                <Link className="public-button" to="/contact" onClick={closeMobileNav}>
-                  Book Appointment <FiArrowRight />
+              <div className="public-mobile-footer" style={{ marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid var(--pub-border)' }}>
+                <Link className="public-button primary" to="/contact" onClick={closeMobileNav} style={{ width: '100%', justifyContent: 'center', marginBottom: '10px' }}>
+                  Book Atelier Appointment <FiArrowRight />
                 </Link>
-                <Link className="public-login" to="/login" onClick={closeMobileNav}>
-                  <FiLock /> Staff Portal Login
+                <a
+                  href="https://api.whatsapp.com/send?phone=919825000000&text=Hello%20Naari%20Art,%20I%20would%20like%20to%20inquire%20about%20couture%20stitching."
+                  target="_blank"
+                  rel="noreferrer"
+                  className="public-button secondary"
+                  style={{ width: '100%', justifyContent: 'center', background: '#25D366', color: '#fff', border: 'none', marginBottom: '10px' }}
+                >
+                  Chat on WhatsApp
+                </a>
+                <Link className="public-login" to="/login" onClick={closeMobileNav} style={{ justifyContent: 'center', padding: '10px' }}>
+                  <FiLock /> Staff & Admin Portal Login
                 </Link>
               </div>
             </div>

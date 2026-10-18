@@ -19,6 +19,7 @@ import Chat from './components/Chat.js';
 import ExpenseAlert from './components/ExpenseAlert.js';
 import Reports from './components/Reports.js';
 import './styles.css';
+import './utils/theme';
 import { storage } from './utils/storage';
 import { LoadingProvider } from './contexts/LoadingContext.js';
 import Invoice from './components/Invoice.js';
@@ -29,6 +30,8 @@ import PublicProduct from './components/PublicProduct.js';
 import ProductDetail from './components/ProductDetail.js';
 import Contact from './components/Contact.js';
 import Leads from './components/Leads.js';
+import Collaborate from './components/Collaborate.js';
+import Collaborators from './components/Collaborators.js';
 import { NotificationProvider } from './contexts/NotificationContext.js';
 import GlobalNotificationToast from './components/GlobalNotificationToast.js';
 import CommandPalette from './components/CommandPalette.js';
@@ -221,9 +224,12 @@ function App() {
                 <Route path="/product" element={<PublicProduct />} />
                 <Route path="/product/:productId" element={<ProductDetail />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/collaborate" element={<Collaborate />} />
+                <Route path="/collaborator" element={<Collaborate />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
 
                 <Route path="/dashboard" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Dashboard onLogout={handleLogout} /></ProtectedRoute>} />
+                <Route path="/collaborators" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Collaborators onLogout={handleLogout} /></ProtectedRoute>} />
                 <Route path="/settings" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Settings onLogout={handleLogout} /></ProtectedRoute>} />
                 <Route path="/customers" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Customer onLogout={handleLogout} /></ProtectedRoute>} />
                 <Route path="/customers/add" element={<ProtectedRoute isLoggedIn={isLoggedIn}><AddEditCustomer onLogout={handleLogout} /></ProtectedRoute>} />

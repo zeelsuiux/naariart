@@ -5,9 +5,12 @@ import '../styles.css';
 import { storage } from '../utils/storage';
 import { legalAPI } from '../services/api';
 import { FiDownload, FiEdit2 } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import logo from '../assets/naari-logo.png';
+import { getThemeRgb } from '../utils/theme';
+import { sendInvoiceViaWhatsApp } from '../utils/whatsapp';
 
 const Invoice = ({ onLogout }) => {
     const navigate = useNavigate();
@@ -104,7 +107,7 @@ const Invoice = ({ onLogout }) => {
         const gst = total - subTotal;
         const netDue = total - advance;
 
-        const primary = [236, 154, 120];
+        const primary = getThemeRgb();
 
         // ======================
         // Header
@@ -335,8 +338,23 @@ const Invoice = ({ onLogout }) => {
                                                         <button
                                                             className="edit-btn download-btn"
                                                             onClick={() => handleDownload(item)}
+                                                            title="Download PDF Invoice"
                                                         >
                                                             <FiDownload />
+                                                        </button>
+
+                                                        <button
+                                                            className="edit-btn"
+                                                            onClick={() => sendInvoiceViaWhatsApp(item)}
+                                                            title="Send Invoice via WhatsApp"
+                                                            style={{
+                                                                background: '#25D366',
+                                                                color: '#FFFFFF',
+                                                                borderColor: '#25D366',
+                                                                marginLeft: '6px'
+                                                            }}
+                                                        >
+                                                            <FaWhatsapp size={14} />
                                                         </button>
                                                     </td>
                                                 </tr>

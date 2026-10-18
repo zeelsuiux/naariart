@@ -55,6 +55,7 @@ const Sidebar = ({ onLogout }) => {
     if (path === '/orders' || path.startsWith('/orders/')) return 'orders';
     if (path === '/team' || path.startsWith('/team/')) return 'team';
     if (path === '/leads' || path.startsWith('/leads/')) return 'leads';
+    if (path === '/collaborators' || path.startsWith('/collaborators/')) return 'collaborators';
     if (path === '/tasks' || path.startsWith('/tasks/')) return 'tasks';
     if (path === '/chat' || path.startsWith('/chat/')) return 'chat';
     if (path === '/alert' || path.startsWith('/alert/')) return 'alert';
@@ -95,6 +96,7 @@ const Sidebar = ({ onLogout }) => {
         { id: 'orders', label: 'Orders', path: '/orders', icon: <FiShoppingBag />, permission: 'orders' },
         { id: 'customers', label: 'Customers', path: '/customers', icon: <FiUser />, permission: 'customers' },
         { id: 'leads', label: 'Leads & Enquiries', path: '/leads', icon: <FiUserCheck />, visible: isAdmin },
+        { id: 'collaborators', label: 'Collaborators', path: '/collaborators', icon: <FiUsers />, visible: isAdmin },
         { id: 'products', label: 'Products & Outfits', path: '/products', icon: <FiPackage />, permission: 'products' },
         { id: 'tasks', label: 'Tasks & Production', path: '/tasks', icon: <FiFileText />, permission: 'task' },
       ],

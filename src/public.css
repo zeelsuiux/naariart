@@ -1823,3 +1823,161 @@
     text-align: center;
   }
 }
+
+/* ==========================================================================
+   ENHANCED MOBILE RESPONSIVENESS & MOBILE MENU (MAX 12PX PADDING)
+   ========================================================================== */
+@media (max-width: 640px) {
+  .public-site {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+
+  /* Header mobile tuning */
+  .public-header {
+    padding: 10px 12px !important;
+  }
+
+  .public-header-inner {
+    padding: 0 !important;
+  }
+
+  .public-brand-logo {
+    height: 34px !important;
+  }
+
+  .public-brand-name {
+    font-size: 17px !important;
+  }
+
+  .public-brand-tagline {
+    display: none !important;
+  }
+
+  .public-login {
+    display: none !important; /* Available inside mobile drawer */
+  }
+
+  .public-mobile-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 8px;
+    background: #F3ECE2;
+    color: var(--pub-primary);
+  }
+
+  /* Mobile Drawer Styling */
+  .public-mobile-drawer {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 12, 10, 0.65);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .public-mobile-drawer-content {
+    width: 84vw !important;
+    max-width: 310px !important;
+    height: 100vh !important;
+    background: #FFFFFF !important;
+    padding: 20px 16px !important;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -4px 0 25px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .public-mobile-links a {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1F2937;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .public-mobile-links a:hover,
+  .public-mobile-links a.active {
+    background: var(--pub-peach-light);
+    color: var(--pub-primary);
+  }
+
+  /* Section padding - max 12px */
+  .public-hero,
+  .highlights-ribbon,
+  .philosophy-section,
+  .process-section,
+  .cta-banner,
+  .product-catalog-page,
+  .product-detail-page,
+  .about-hero,
+  .about-story-section,
+  .about-values-section,
+  .contact-page,
+  .public-footer {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .public-hero {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    gap: 24px !important;
+  }
+
+  .hero-title {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+
+  .public-lede {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  .public-actions {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .public-button {
+    width: 100% !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-perks {
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: flex-start !important;
+  }
+
+  .contact-form-card {
+    padding: 20px 14px !important;
+    border-radius: 12px !important;
+  }
+
+  .contact-form-card input,
+  .contact-form-card select,
+  .contact-form-card textarea {
+    font-size: 16px !important; /* Prevents auto-zoom on mobile safari/chrome */
+  }
+
+  /* Prevent any horizontal overflow */
+  * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+}
+

@@ -5,11 +5,14 @@ import '../styles.css';
 import { storage } from '../utils/storage';
 import { orderAPI, bankDetailsAPI, legalAPI } from "../services/api";
 import { FiPlus, FiSearch, FiEdit2, FiTrash2, FiEye, FiPackage, FiDownload, FiPrinter } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import Pagination from './Pagination.js';
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import OrderPrint from "./OrderPrint";
+import { getThemeRgb } from '../utils/theme';
+import { sendOrderQuotationViaWhatsApp } from '../utils/whatsapp';
 
 
 const Order = ({ onLogout }) => {
@@ -121,11 +124,12 @@ const Order = ({ onLogout }) => {
 
   const generateQuotationPDF = (order) => {
     const doc = new jsPDF("p", "mm", "a4");
+    const themeRgb = getThemeRgb();
 
     // ================= HEADER =================
 
     doc.setFont("helvetica", "bold");
-    doc.setTextColor(226, 155, 125);
+    doc.setTextColor(...themeRgb);
     doc.setFontSize(22);
     doc.text("Naari House", 15, 18);
 
@@ -141,7 +145,7 @@ const Order = ({ onLogout }) => {
 
     // ================= RIGHT =================
 
-    doc.setTextColor(226, 155, 125);
+    doc.setTextColor(...themeRgb);
     doc.setFontSize(24);
     doc.setFont("helvetica", "bold");
     doc.text("QUOTATION", 195, 18, { align: "right" });
@@ -214,7 +218,7 @@ const Order = ({ onLogout }) => {
       body: rows,
       theme: "grid",
       headStyles: {
-        fillColor: [226, 155, 125],
+        fillColor: themeRgb,
         textColor: [255, 255, 255],
         halign: "center",
       },
@@ -708,6 +712,14 @@ const Order = ({ onLogout }) => {
                                   <FiDownload size={14} />
                                 </button>
                               )}
+                              <button
+                                className="mm-table-action-btn mm-whatsapp-btn"
+                                title="Send Quotation / Estimate via WhatsApp"
+                                onClick={() => sendOrderQuotationViaWhatsApp(order)}
+                                style={{ color: '#25D366' }}
+                              >
+                                <FaWhatsapp size={15} />
+                              </button>
                             </div>
                           </td>
                         </tr>

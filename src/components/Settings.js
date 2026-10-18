@@ -7,6 +7,7 @@ import WorkTypeModal from './WorkTypeModal.js';
 import FinanceTypeModal from './FinanceTypeModal.js';
 import FinanceTransactionModal from './FinanceTransactionModal.js';
 import Sidebar from './Sidebar.js';
+import ThemeSettings from './ThemeSettings.js';
 import '../styles.css';
 import { storage } from '../utils/storage';
 import {
@@ -933,6 +934,7 @@ const Settings = ({ onLogout }) => {
     { id: 'worktype', label: 'Collections', icon: <FiPackage size={13} />, permission: 'worktypes' },
     { id: 'finance', label: 'Finance', icon: <FiDollarSign size={13} />, permission: 'accounting' },
     { id: 'bank', label: 'Bank Details', icon: <FiCreditCard size={13} />, permission: 'accounting' },
+    { id: 'theme', label: 'Theme & Colors', icon: <FiSliders size={13} />, permission: null },
   ];
 
   // permission condition start
@@ -941,11 +943,12 @@ const Settings = ({ onLogout }) => {
   );
 
   const hasPermission = (collectionName) => {
+    if (!collectionName) return true;
     const permission = permissions.find(
       (p) => p.collectionName === collectionName
     );
 
-    return permission?.view === true;
+    return permission?.view === true || storage.isAdmin();
   };
 
   const visibleTabs = tabs.filter((tab) =>
@@ -2701,6 +2704,11 @@ const Settings = ({ onLogout }) => {
               </div>
             )}
           </div>
+        )}
+
+        {/* Theme & Colors Tab Content */}
+        {activeTab === 'theme' && (
+          <ThemeSettings />
         )}
 
         {/* Subcategory Modal */}
