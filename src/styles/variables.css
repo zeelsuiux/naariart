@@ -15,6 +15,7 @@
   /* Primary Colors - Luxury Couture Orange (My Metaji Theme) */
   --primary-color: #B84F2A;
   --primary-gradient: linear-gradient(135deg, #B84F2A 0%, #D86F45 100%);
+  --sidebar-bg-gradient: linear-gradient(180deg, #8C3720 0%, #B84F2A 28%, #CA643D 70%, #9E3E24 100%);
   --primary-orange-color: #FFF7ED;
   
   /* secondary gradient */

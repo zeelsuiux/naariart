@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import '../styles.css';
 import {
@@ -31,6 +31,13 @@ const Sidebar = ({ onLogout }) => {
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMini, setIsMini] = useState(() => localStorage.getItem('naari_sidebar_mini') === 'true');
+  const [, setThemeVersion] = useState(0);
+
+  useEffect(() => {
+    const onThemeChange = () => setThemeVersion((v) => v + 1);
+    window.addEventListener('naari-theme-changed', onThemeChange);
+    return () => window.removeEventListener('naari-theme-changed', onThemeChange);
+  }, []);
 
   const toggleMini = () => {
     setIsMini(prev => {
@@ -199,7 +206,7 @@ const Sidebar = ({ onLogout }) => {
   return (
     <>
       {/* Mobile Top Bar with Hamburger */}
-      <div className="mm-mobile-header">
+      <div className="mm-mobile-header" style={{ background: 'var(--primary-gradient)' }}>
         <button
           type="button"
           className="mm-mobile-menu-btn"
@@ -227,8 +234,11 @@ const Sidebar = ({ onLogout }) => {
         />
       )}
 
-      {/* Modern Accordion Sidebar (My Metaji Orange Theme) */}
-      <aside className={`sidebar mm-sidebar ${isMobileMenuOpen ? 'mobile-open' : ''} ${isMini ? 'mini' : ''}`}>
+      {/* Modern Accordion Sidebar with Dynamic Theme Gradient */}
+      <aside
+        className={`sidebar mm-sidebar ${isMobileMenuOpen ? 'mobile-open' : ''} ${isMini ? 'mini' : ''}`}
+        style={{ background: 'var(--sidebar-bg-gradient)' }}
+      >
         {/* Brand Header */}
         <div className="brand mm-brand">
           <Link to="/dashboard" className="brand-link" onClick={() => setIsMobileMenuOpen(false)}>

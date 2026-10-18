@@ -6005,7 +6005,7 @@ textarea.input-field {
   width: 236px !important;
   min-width: 236px !important;
   height: 100vh !important;
-  background: linear-gradient(180deg, #8C3720 0%, #B84F2A 28%, #CA643D 70%, #9E3E24 100%) !important;
+  background: var(--sidebar-bg-gradient, linear-gradient(180deg, #8C3720 0%, #B84F2A 28%, #CA643D 70%, #9E3E24 100%)) !important;
   border-radius: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
@@ -6270,7 +6270,7 @@ textarea.input-field {
 
 .sidebar-link-single.active .sb-icon-wrap {
   background: #FFFFFF;
-  color: #B84F2A;
+  color: var(--primary-color) !important;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
@@ -6382,7 +6382,7 @@ textarea.input-field {
   left: 0;
   right: 0;
   height: 60px;
-  background: linear-gradient(90deg, #8C3720, #B84F2A);
+  background: var(--primary-gradient, linear-gradient(90deg, #8C3720, #B84F2A)) !important;
   color: #FFFFFF;
   z-index: 100;
   align-items: center;

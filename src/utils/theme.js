@@ -71,7 +71,9 @@ export const applyTheme = (primaryHex) => {
     primaryHex = '#B84F2A';
   }
 
-  const primaryDark = adjustBrightness(primaryHex, -20);
+  const primaryDark = adjustBrightness(primaryHex, -22);
+  const primaryDarkest = adjustBrightness(primaryHex, -38);
+  const primaryLighter = adjustBrightness(primaryHex, 18);
   const primaryHover = adjustBrightness(primaryHex, -12);
   const primaryLight = adjustBrightness(primaryHex, 75);
   const primaryDimLight = adjustBrightness(primaryHex, 92);
@@ -79,16 +81,21 @@ export const applyTheme = (primaryHex) => {
   const gradientSecond = adjustBrightness(primaryHex, 18);
   const secondaryGradSecond = adjustBrightness(primaryHex, 30);
 
+  // Full software luxury gradient for sidebar
+  const sidebarGradient = `linear-gradient(180deg, ${primaryDarkest} 0%, ${primaryHex} 28%, ${primaryLighter} 70%, ${primaryDark} 100%)`;
+
   const root = document.documentElement;
   if (root) {
     root.style.setProperty('--primary-color', primaryHex);
     root.style.setProperty('--primary-dark', primaryDark);
+    root.style.setProperty('--primary-darkest', primaryDarkest);
     root.style.setProperty('--primary-hover', primaryHover);
     root.style.setProperty('--primary-light', primaryLight);
     root.style.setProperty('--primary-dim-light', primaryDimLight);
     root.style.setProperty('--primary-orange-color', primaryOrangeColor);
     root.style.setProperty('--primary-gradient', `linear-gradient(135deg, ${primaryHex} 0%, ${gradientSecond} 100%)`);
     root.style.setProperty('--secondary-gradient', `linear-gradient(135deg, ${gradientSecond} 0%, ${secondaryGradSecond} 100%)`);
+    root.style.setProperty('--sidebar-bg-gradient', sidebarGradient);
 
     // Public site theme tokens
     root.style.setProperty('--pub-primary', primaryHex);
