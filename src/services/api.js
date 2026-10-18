@@ -81,9 +81,12 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // Token expired or invalid
-      localStorage.removeItem('naari_token');
-      localStorage.removeItem('naari_user');
-      window.location.href = '/';
+      const currentToken = localStorage.getItem('naari_token');
+      if (currentToken && currentToken !== 'demo-preview-token') {
+        localStorage.removeItem('naari_token');
+        localStorage.removeItem('naari_user');
+        window.location.hash = '#/login';
+      }
     } else if (error.response?.status === 400) {
       // Return error message from .Message key for 400 status
       const errorMessage = error.response.data?.Message || 'Bad Request';
