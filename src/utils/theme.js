@@ -136,66 +136,190 @@ export const applyTheme = (primaryHex) => {
         --pub-accent: ${gradientSecond} !important;
         --pub-peach-light: ${primaryDimLight} !important;
         --pub-border-focus: ${primaryHex} !important;
+        --pub-primary-shadow: ${primaryLight} !important;
+        --pub-primary-border: ${primaryLight} !important;
       }
 
-      /* Buttons & Tabs across software and visitor site */
+      /* ═══ 1. BUTTONS & CTAs (Both Panels) ═══ */
       .mm-btn-primary,
       .btn-create-primary,
       .login-button,
       .pub-btn-primary,
-      .public-site .pub-btn-primary,
+      .public-site .public-button.primary,
+      .public-site .public-enquire-pill,
       .public-site .header-cta,
       .public-site .pub-cta-banner .pub-btn-primary,
       .public-site .contact-submit-btn,
-      .public-site .collab-submit-btn {
+      .public-site .collab-submit-btn,
+      .public-site .form-submit-btn,
+      .save-btn,
+      .btn-primary {
         background: linear-gradient(135deg, ${primaryHex} 0%, ${gradientSecond} 100%) !important;
         border-color: ${primaryHex} !important;
         color: #FFFFFF !important;
+        box-shadow: 0 4px 12px ${primaryLight} !important;
       }
 
       .mm-btn-primary:hover,
       .btn-create-primary:hover,
       .login-button:hover,
       .pub-btn-primary:hover,
-      .public-site .pub-btn-primary:hover,
+      .public-site .public-button.primary:hover,
+      .public-site .public-enquire-pill:hover,
       .public-site .header-cta:hover,
       .public-site .contact-submit-btn:hover,
-      .public-site .collab-submit-btn:hover {
+      .public-site .collab-submit-btn:hover,
+      .public-site .form-submit-btn:hover,
+      .save-btn:hover,
+      .btn-primary:hover {
         background: ${primaryHover} !important;
         border-color: ${primaryHover} !important;
+        color: #FFFFFF !important;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px ${primaryLight} !important;
       }
 
+      .public-site .public-button.secondary:hover,
+      .public-site .public-button.outline:hover,
+      .mm-btn-secondary:hover {
+        border-color: ${primaryHex} !important;
+        color: ${primaryHex} !important;
+        background: ${primaryDimLight} !important;
+      }
+
+      /* ═══ 2. TABS & NAVIGATION ═══ */
       .tab-button.active,
       .tabs .tab.active,
       .mm-tabs .mm-tab.active,
+      .public-site .category-pill.active,
       .public-site .pub-pill.active,
-      .public-site .nav-link.active {
+      .public-site .public-nav a.active,
+      .public-site .public-mobile-links a.active {
         background: ${primaryHex} !important;
         color: #FFFFFF !important;
         border-color: ${primaryHex} !important;
       }
 
+      .public-site .public-nav a:hover,
+      .public-site .public-mobile-links a:hover {
+        color: ${primaryHex} !important;
+      }
+
+      .public-site .category-pill:hover {
+        border-color: ${primaryHex} !important;
+        color: ${primaryHex} !important;
+      }
+
+      .mm-view-toggle button.active,
+      .leads-view-toggle .view-toggle-btn.active {
+        background: ${primaryHex} !important;
+        color: #FFFFFF !important;
+        border-color: ${primaryHex} !important;
+      }
+
+      /* ═══ 3. SIDEBAR & BRANDING ═══ */
       .mm-sidebar,
       .sidebar {
         background: ${sidebarGradient} !important;
       }
 
       .sidebar-link-single.active {
-        background: rgba(255, 255, 255, 0.18) !important;
+        background: rgba(255, 255, 255, 0.2) !important;
         border-left: 4px solid #FFFFFF !important;
       }
 
-      /* Public site accent highlights */
-      .public-site .hero-badge,
-      .public-site .pub-pill,
-      .public-site .section-tag {
+      .sidebar-link-single:hover:not(.active) {
+        background: rgba(255, 255, 255, 0.12) !important;
+      }
+
+      /* ═══ 4. FOCUS RINGS & INPUTS ═══ */
+      input:focus,
+      select:focus,
+      textarea:focus,
+      .form-input:focus,
+      .form-textarea:focus,
+      .mm-search-bar input:focus,
+      .catalog-search input:focus {
+        border-color: ${primaryHex} !important;
+        box-shadow: 0 0 0 3px ${primaryLight} !important;
+        outline: none !important;
+      }
+
+      /* ═══ 5. BADGES, CHIPS & HIGHLIGHTS ═══ */
+      .mm-count-pill,
+      .mm-studio-badge,
+      .topbar-shop-badge {
+        background: ${primaryOrangeColor} !important;
         color: ${primaryHex} !important;
         border-color: ${primaryLight} !important;
       }
 
-      .public-site .price-tag,
-      .public-site .feature-icon,
-      .public-site .contact-icon-box {
+      .mm-studio-dot,
+      .topbar-shop-dot {
+        background: ${primaryHex} !important;
+        box-shadow: 0 0 6px ${primaryHex} !important;
+      }
+
+      .mm-header-icon-badge {
+        background: ${primaryOrangeColor} !important;
+        color: ${primaryHex} !important;
+        border: 1px solid ${primaryLight} !important;
+      }
+
+      .hero-stat strong,
+      .title-accent,
+      .public-site .title-accent,
+      .public-eyebrow,
+      .hero-badge,
+      .public-site .hero-badge,
+      .step-count,
+      .feature-num,
+      .price-tag,
+      .product-price,
+      .public-site .price-row .price {
+        color: ${primaryHex} !important;
+      }
+
+      .hero-badge,
+      .public-site .hero-badge {
+        border-color: ${primaryLight} !important;
+        background: ${primaryDimLight} !important;
+      }
+
+      /* ═══ 6. PAGINATION & TABLES ═══ */
+      .pagination button.active,
+      .page-item.active .page-link,
+      .mm-pagination-btn.active {
+        background: ${primaryHex} !important;
+        border-color: ${primaryHex} !important;
+        color: #FFFFFF !important;
+      }
+
+      .mm-table tr:hover td,
+      .modern-table tbody tr:hover td {
+        background-color: ${primaryDimLight} !important;
+      }
+
+      .mm-table-action-btn:hover {
+        background: ${primaryHex} !important;
+        color: #FFFFFF !important;
+      }
+
+      /* ═══ 7. ICONS & CARDS ═══ */
+      .highlight-icon,
+      .info-icon,
+      .contact-icon,
+      .public-brand-name {
+        color: ${primaryHex} !important;
+      }
+
+      .cmd-palette-item.selected,
+      .cmd-palette-item:hover {
+        background: ${primaryOrangeColor} !important;
+        color: ${primaryHex} !important;
+      }
+
+      .cmd-palette-item.selected .cmd-item-icon {
         color: ${primaryHex} !important;
       }
     `;

@@ -19,6 +19,8 @@
   --pub-text-light: #9B9287;
   --pub-border: #E8E0D5;
   --pub-border-focus: var(--primary-color, #B84F2A);
+  --pub-primary-shadow: var(--primary-light, rgba(184, 79, 42, 0.25));
+  --pub-primary-border: var(--primary-light, rgba(184, 79, 42, 0.2));
   --pub-shadow-sm: 0 2px 8px rgba(30, 27, 24, 0.04);
   --pub-shadow-md: 0 8px 24px rgba(30, 27, 24, 0.08);
   --pub-shadow-lg: 0 16px 40px rgba(30, 27, 24, 0.12);
@@ -227,14 +229,14 @@
   font-weight: 600;
   padding: 10px 18px;
   border-radius: var(--pub-radius-pill);
-  box-shadow: 0 4px 12px rgba(180, 83, 60, 0.25);
+  box-shadow: 0 4px 12px var(--pub-primary-shadow);
   transition: all 0.2s ease;
 }
 
 .public-enquire-pill:hover {
   background: var(--pub-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(180, 83, 60, 0.35);
+  box-shadow: 0 6px 16px var(--pub-primary-shadow);
 }
 
 .public-login {
@@ -365,7 +367,7 @@
   gap: 8px;
   background: var(--pub-peach-light);
   color: var(--pub-primary);
-  border: 1px solid rgba(180, 83, 60, 0.2);
+  border: 1px solid var(--pub-primary-border);
   padding: 7px 16px;
   border-radius: var(--pub-radius-pill);
   font-size: 12px;
@@ -392,13 +394,13 @@
 .public-site .public-button.primary {
   background: var(--pub-primary);
   color: #FFFFFF !important;
-  box-shadow: 0 4px 14px rgba(180, 83, 60, 0.28);
+  box-shadow: 0 4px 14px var(--pub-primary-shadow);
 }
 
 .public-site .public-button.primary:hover {
   background: var(--pub-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(180, 83, 60, 0.36);
+  box-shadow: 0 8px 22px var(--pub-primary-shadow);
 }
 
 .public-site .public-button.secondary {
@@ -493,7 +495,7 @@
 .hero-visual-card {
   position: relative;
   background: linear-gradient(135deg, #F3ECE2 0%, #E8DCCF 100%);
-  border: 1px solid rgba(180, 83, 60, 0.2);
+  border: 1px solid var(--pub-primary-border);
   border-radius: var(--pub-radius-lg);
   padding: 40px;
   box-shadow: var(--pub-shadow-lg);
@@ -563,7 +565,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  border-top: 1px solid rgba(180, 83, 60, 0.2);
+  border-top: 1px solid var(--pub-primary-border);
   padding-top: 20px;
 }
 
@@ -694,7 +696,7 @@
 .feature-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--pub-shadow-md);
-  border-color: rgba(180, 83, 60, 0.4);
+  border-color: var(--pub-primary);
 }
 
 .feature-num {
@@ -930,7 +932,7 @@
 .public-product-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--pub-shadow-md);
-  border-color: rgba(180, 83, 60, 0.4);
+  border-color: var(--pub-primary);
 }
 
 .product-image-wrap {
@@ -1078,7 +1080,7 @@
 .catalog-spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid rgba(180, 83, 60, 0.2);
+  border: 3px solid var(--pub-primary-border);
   border-top-color: var(--pub-primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -1194,7 +1196,7 @@
 
 .detail-price-box {
   background: var(--pub-peach-light);
-  border: 1px solid rgba(180, 83, 60, 0.2);
+  border: 1px solid var(--pub-primary-border);
   border-radius: var(--pub-radius-md);
   padding: 14px 20px;
   display: flex;
@@ -1562,7 +1564,7 @@
 
 .requested-piece-banner {
   background: var(--pub-peach-light);
-  border: 1px solid rgba(180, 83, 60, 0.25);
+  border: 1px solid var(--pub-primary-shadow);
   color: var(--pub-primary);
   padding: 10px 16px;
   border-radius: var(--pub-radius-md);
@@ -1640,7 +1642,7 @@
 .contact-field textarea:focus {
   border-color: var(--pub-border-focus);
   background: #FFFFFF;
-  box-shadow: 0 0 0 3px rgba(180, 83, 60, 0.15);
+  box-shadow: 0 0 0 3px var(--pub-primary-border);
 }
 
 .form-submit-btn {

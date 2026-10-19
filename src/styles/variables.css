@@ -1,70 +1,140 @@
-/* ========================================
-   CSS VARIABLES - THEME COLORS
-   ======================================== */
+/* ==========================================================================
+   NAARI ART - COMPREHENSIVE DESIGN TOKENS & VARIABLES
+   Unified across Visitor Panel and Admin Panel
+   ========================================================================== */
 
 :root {
-  /* Alert Colors */
-  --alert-color: #FF0000;
-  
-  
-  /* Text Colors */
-  --black-color: #222222;
-  --gray-color: #5D5D5D;
-  --light-gray-color: #DEDEDE;
-  
-  /* Primary Colors - Luxury Couture Orange (My Metaji Theme) */
+  /* Brand Theme Colors - Dynamic with Settings Customizer */
   --primary-color: #B84F2A;
-  --primary-gradient: linear-gradient(135deg, #B84F2A 0%, #D86F45 100%);
-  --sidebar-bg-gradient: linear-gradient(180deg, #8C3720 0%, #B84F2A 28%, #CA643D 70%, #9E3E24 100%);
-  --primary-orange-color: #FFF7ED;
-  
-  /* secondary gradient */
-  --secondary-gradient: linear-gradient(135deg, #D86F45 0%, #EA7A50 100%);
-  /* Status Colors */
-  --success-color: #10B981;
-  --warn-color: #F59E0B;
-  
-  /* Extended Color Palette */
+  --primary-dark: #9A3412;
+  --primary-darkest: #702409;
+  --primary-hover: #9C3E25;
   --primary-light: #FFEDD5;
   --primary-dim-light: #FFFBF9;
-  --primary-dark: #9A3412;
-  --primary-hover: #9C3E25;
-  
-  /* Neutral Colors */
+  --primary-orange-color: #FFF7ED;
+  --primary-gradient: linear-gradient(135deg, #B84F2A 0%, #D86F45 100%);
+  --secondary-gradient: linear-gradient(135deg, #D86F45 0%, #EA7A50 100%);
+  --sidebar-bg-gradient: linear-gradient(180deg, #702409 0%, #B84F2A 28%, #D86F45 70%, #9A3412 100%);
+
+  /* Visitor Panel Bridge Tokens */
+  --pub-bg: #FAF7F2;
+  --pub-bg-card: #FFFFFF;
+  --pub-bg-subtle: #F3ECE2;
+  --pub-primary: var(--primary-color, #B84F2A);
+  --pub-primary-hover: var(--primary-hover, #9C3E25);
+  --pub-accent: #D86F45;
+  --pub-peach-light: var(--primary-orange-color, #FFF7ED);
+  --pub-text-dark: #1E1B18;
+  --pub-text-muted: #6B635A;
+  --pub-text-light: #9B9287;
+  --pub-border: #E8E0D5;
+  --pub-border-focus: var(--primary-color, #B84F2A);
+
+  /* Semantic Status Colors (Badges, Chips & Highlights) */
+  --status-new-bg: #FEF3C7;
+  --status-new-text: #92400E;
+  --status-new-border: #FDE68A;
+
+  --status-inprogress-bg: #EFF6FF;
+  --status-inprogress-text: #1D4ED8;
+  --status-inprogress-border: #BFDBFE;
+
+  --status-ready-bg: #F0FDF4;
+  --status-ready-text: #15803D;
+  --status-ready-border: #BBF7D0;
+
+  --status-completed-bg: #ECFDF5;
+  --status-completed-text: #047857;
+  --status-completed-border: #A7F3D0;
+
+  --status-delivered-bg: #F5F3FF;
+  --status-delivered-text: #6D28D9;
+  --status-delivered-border: #DDD6FE;
+
+  --status-urgent-bg: #FEF2F2;
+  --status-urgent-text: #B91C1C;
+  --status-urgent-border: #FECACA;
+
+  --status-admin-bg: var(--primary-orange-color, #FFF7ED);
+  --status-admin-text: var(--primary-color, #B84F2A);
+  --status-admin-border: var(--primary-light, #FFEDD5);
+
+  /* Alert & System Status */
+  --alert-color: #EF4444;
+  --success-color: #10B981;
+  --warn-color: #F59E0B;
+  --info-color: #3B82F6;
+
+  /* Surfaces & Backgrounds */
   --white-color: #FFFFFF;
-  --border-color: #E5E7EB;
-  --background-light: #F9FAFB;
-  --background-gray: #F3F4F6;
-  
-  /* Shadow Colors */
-  --shadow-light: rgba(0, 0, 0, 0.06);
-  --shadow-medium: rgba(0, 0, 0, 0.1);
-  --shadow-dark: rgba(0, 0, 0, 0.15);
-  
-  /* Spacing Variables */
+  --surface-ground: #F8FAFC;
+  --surface-card: #FFFFFF;
+  --surface-subtle: #F1F5F9;
+  --surface-border: #E2E8F0;
+  --surface-border-subtle: #F1F5F9;
+
+  /* Text Colors & Contrast */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-light: #94A3B8;
+  --text-white: #FFFFFF;
+
+  --black-color: #0F172A;
+  --gray-color: #475569;
+  --light-gray-color: #E2E8F0;
+  --border-color: #E2E8F0;
+  --background-light: #F8FAFC;
+  --background-gray: #F1F5F9;
+
+  /* Elevation & Shadows */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-card-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+  --shadow-dropdown: 0 10px 25px rgba(15, 23, 42, 0.12);
+  --shadow-modal: 0 20px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  --shadow-theme: 0 4px 14px var(--primary-light, rgba(184, 79, 42, 0.25));
+
+  --shadow-light: rgba(0, 0, 0, 0.04);
+  --shadow-medium: rgba(0, 0, 0, 0.08);
+  --shadow-dark: rgba(0, 0, 0, 0.14);
+
+  /* Spacing Scale */
+  --spacing-2xs: 2px;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 12px;
   --spacing-lg: 16px;
   --spacing-xl: 20px;
   --spacing-2xl: 24px;
-  
-  /* Border Radius */
+  --spacing-3xl: 32px;
+
+  /* Border Radii */
+  --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
-  
-  /* Font Families */
-  --font-primary: 'Inter', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-secondary: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  
-  /* Font Sizes */
+  --radius-2xl: 20px;
+  --radius-pill: 9999px;
+
+  /* Typography Scale */
+  --font-primary: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: 'DM Serif Display', Georgia, serif;
+
+  --font-2xs: 11px;
   --font-xs: 12px;
-  --font-sm: 14px;
-  --font-md: 16px;
-  --font-lg: 18px;
+  --font-sm: 13.5px;
+  --font-md: 15px;
+  --font-lg: 17px;
   --font-xl: 20px;
   --font-2xl: 24px;
-  --font-3xl: 32px;
+  --font-3xl: 30px;
+  --font-4xl: 38px;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
