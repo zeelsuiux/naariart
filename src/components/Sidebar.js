@@ -75,10 +75,10 @@ const Sidebar = ({ onLogout }) => {
 
   const activeItem = getActiveItem();
 
-  // Permissions check
-  const permissions = JSON.parse(localStorage.getItem('naari_permissions') || '[]');
+  // Permissions check safely from storage
+  const permissions = storage.getPermissions() || [];
   const hasPermission = (collectionName) => {
-    const p = permissions.find((item) => item.collectionName === collectionName);
+    const p = permissions.find((item) => item?.collectionName === collectionName);
     return p?.view === true;
   };
 

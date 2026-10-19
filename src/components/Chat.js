@@ -11,8 +11,8 @@ import { IoLogoWechat } from 'react-icons/io5';
 import { triggerInAppNotification } from '../contexts/NotificationContext';
 
 const Chat = ({ onLogout }) => {
-  const user = JSON.parse(localStorage.getItem("naari_user"));
-  const isAdmin = user?.type === "admin";
+  const user = storage.getUser();
+  const isAdmin = storage.isAdmin();
   const navigate = useNavigate();
   const [chats, setChats] = useState([]);
   const [selectedChat, setSelectedChat] = useState(null);

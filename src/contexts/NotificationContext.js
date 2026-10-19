@@ -10,9 +10,9 @@ export const NotificationProvider = ({ children }) => {
   // Check if current user is Master Admin or Admin with add/edit access
   const hasAlertPermission = useCallback(() => {
     if (storage.isAdmin()) return true;
-    const permissions = JSON.parse(localStorage.getItem('naari_permissions') || '[]');
+    const permissions = storage.getPermissions() || [];
     // If user has write/add/edit permission in any core module
-    return permissions.some(p => p.add === true || p.edit === true || p.view === true);
+    return permissions.some(p => p?.add === true || p?.edit === true || p?.view === true || p?.insertUpdate === true);
   }, []);
 
   const removeNotification = useCallback((id) => {

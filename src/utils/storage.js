@@ -18,16 +18,31 @@ export const storage = {
     return localStorage.getItem('naari_token');
   },
 
-  // Get user data
+  // Get user data safely with try/catch
   getUser: () => {
-    const userData = localStorage.getItem('naari_user');
-    return userData ? JSON.parse(userData) : null;
+    try {
+      const userData = localStorage.getItem('naari_user');
+      if (!userData || userData === 'undefined' || userData === 'null') return null;
+      return JSON.parse(userData);
+    } catch (e) {
+      console.warn('Corrupted naari_user in localStorage, clearing...', e);
+      localStorage.removeItem('naari_user');
+      return null;
+    }
   },
 
-  // Get user permissions
+  // Get user permissions safely with try/catch
   getPermissions: () => {
-    const permissions = localStorage.getItem('naari_permissions');
-    return permissions ? JSON.parse(permissions) : null;
+    try {
+      const permissions = localStorage.getItem('naari_permissions');
+      if (!permissions || permissions === 'undefined' || permissions === 'null') return [];
+      const parsed = JSON.parse(permissions);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (e) {
+      console.warn('Corrupted naari_permissions in localStorage, clearing...', e);
+      localStorage.removeItem('naari_permissions');
+      return [];
+    }
   },
 
   // Check if user has specific permission
@@ -52,57 +67,94 @@ export const storage = {
 
   // Check if user is authenticated
   isAuthenticated: () => {
-    const token = localStorage.getItem('naari_token');
-    const user = localStorage.getItem('naari_user');
-    return !!(token && user);
+    try {
+      const token = localStorage.getItem('naari_token');
+      const user = storage.getUser();
+      return !!(token && user);
+    } catch (e) {
+      return false;
+    }
   },
 
   // Check if user is master admin
   isMaster: () => {
-    const user = storage.getUser();
-    return user && user.roleid && user.roleid.ismaster === true;
+    try {
+      const user = storage.getUser();
+      return Boolean(user && user.roleid && user.roleid.ismaster === true);
+    } catch (e) {
+      return false;
+    }
   },
 
   isAdmin: () => {
-    const user = storage.getUser();
-    const roleName = typeof user?.roleid === 'object'
-      ? user.roleid?.name
-      : user?.roleName || user?.role;
+    try {
+      const user = storage.getUser();
+      if (!user) return false;
+      const roleName = typeof user?.roleid === 'object'
+        ? user.roleid?.name
+        : user?.roleName || user?.role;
 
-    return Boolean(
-      user?.type?.toLowerCase() === 'admin' ||
-      user?.roleid?.ismaster === true ||
-      roleName?.toLowerCase().includes('admin') ||
-      user?.fullName === 'Admin'
-    );
+      return Boolean(
+        user?.type?.toLowerCase() === 'admin' ||
+        user?.roleid?.ismaster === true ||
+        roleName?.toLowerCase().includes('admin') ||
+        user?.fullName === 'Admin' ||
+        user?.userName === 'admin@naariart.com'
+      );
+    } catch (e) {
+      return false;
+    }
   },
 
   // Get user role name
   getUserRole: () => {
-    const user = storage.getUser();
-    return user && user.roleid ? user.roleid.name : null;
+    try {
+      const user = storage.getUser();
+      return user?.roleid?.name || user?.roleName || (storage.isAdmin() ? 'Administrator' : 'Staff');
+    } catch (e) {
+      return 'Staff';
+    }
   },
 
   // Clear authentication data
   clearAuthData: () => {
-    localStorage.removeItem('naari_token');
-    localStorage.removeItem('naari_user');
-    localStorage.removeItem('naari_permissions');
+    try {
+      localStorage.removeItem('naari_token');
+      localStorage.removeItem('naari_user');
+      localStorage.removeItem('naari_permissions');
+    } catch (e) {
+      console.error('Error clearing auth data:', e);
+    }
   },
 
   // Save any data
   setData: (key, data) => {
-    localStorage.setItem(`naari_${key}`, JSON.stringify(data));
+    try {
+      localStorage.setItem(`naari_${key}`, JSON.stringify(data));
+    } catch (e) {
+      console.error(`Error saving naari_${key}:`, e);
+    }
   },
 
-  // Get any data
+  // Get any data safely
   getData: (key) => {
-    const data = localStorage.getItem(`naari_${key}`);
-    return data ? JSON.parse(data) : null;
+    try {
+      const data = localStorage.getItem(`naari_${key}`);
+      if (!data || data === 'undefined' || data === 'null') return null;
+      return JSON.parse(data);
+    } catch (e) {
+      console.warn(`Corrupted naari_${key} in localStorage, clearing...`, e);
+      localStorage.removeItem(`naari_${key}`);
+      return null;
+    }
   },
 
   // Remove any data
   removeData: (key) => {
-    localStorage.removeItem(`naari_${key}`);
+    try {
+      localStorage.removeItem(`naari_${key}`);
+    } catch (e) {
+      console.error(`Error removing naari_${key}:`, e);
+    }
   }
 };

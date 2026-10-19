@@ -10,8 +10,8 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { sendOrderInvoiceViaWhatsApp } from '../utils/whatsapp';
 
 const ViewOrder = ({ onLogout }) => {
-  const user = JSON.parse(localStorage.getItem("naari_user"));
-  const isAdmin = user?.type === "admin";
+  const user = storage.getUser();
+  const isAdmin = storage.isAdmin();
   const navigate = useNavigate();
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);

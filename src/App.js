@@ -263,10 +263,19 @@ function App() {
   useEffect(() => {
     const checkAuthStatus = () => {
       try {
-        const isAuthenticated = storage.isAuthenticated();
-        setIsLoggedIn(Boolean(isAuthenticated));
+        const token = storage.getToken();
+        const user = storage.getUser();
+        // If one is present without the other, auto-clean to prevent partial zombie state
+        if ((token && !user) || (!token && user)) {
+          console.warn('Inconsistent session tokens detected, healing session...');
+          storage.clearAuthData();
+          setIsLoggedIn(false);
+        } else {
+          setIsLoggedIn(Boolean(token && user));
+        }
       } catch (error) {
         console.error('Error checking auth status:', error);
+        storage.clearAuthData();
         setIsLoggedIn(false);
       } finally {
         setLoading(false);

@@ -284,10 +284,10 @@ const Order = ({ onLogout }) => {
   // local permission get logic start
 
   const isAdmin = storage.isAdmin();
-  const permissions = JSON.parse(localStorage.getItem("naari_permissions")) || [];
+  const permissions = storage.getPermissions() || [];
 
   const orderPermission = permissions.find(
-    (item) => item.collectionName === "orders" || item.collectionName === "order"
+    (item) => item?.collectionName === "orders" || item?.collectionName === "order"
   );
 
   const canAddEdit = isAdmin || Boolean(orderPermission?.insertUpdate);

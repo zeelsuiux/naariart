@@ -938,14 +938,12 @@ const Settings = ({ onLogout }) => {
   ];
 
   // permission condition start
-  const permissions = JSON.parse(
-    localStorage.getItem("naari_permissions") || "[]"
-  );
+  const permissions = storage.getPermissions() || [];
 
   const hasPermission = (collectionName) => {
     if (!collectionName) return true;
     const permission = permissions.find(
-      (p) => p.collectionName === collectionName
+      (p) => p?.collectionName === collectionName
     );
 
     return permission?.view === true || storage.isAdmin();

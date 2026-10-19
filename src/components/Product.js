@@ -40,9 +40,9 @@ const Product = ({ onLogout }) => {
   };
 
   const isAdmin = storage.isAdmin();
-  const permissions = JSON.parse(localStorage.getItem("naari_permissions")) || [];
+  const permissions = storage.getPermissions() || [];
   const productPermission = permissions.find(
-    (item) => item.collectionName === "products" || item.collectionName === "product"
+    (item) => item?.collectionName === "products" || item?.collectionName === "product"
   );
   const canAddEdit = isAdmin || Boolean(productPermission?.insertUpdate);
   const canView = isAdmin || Boolean(productPermission?.view);
