@@ -572,6 +572,36 @@ export const INITIAL_ACCOUNTING = [
   },
 ];
 
+export const INITIAL_LEGAL = [
+  {
+    _id: 'legal-101',
+    legalid: 'INV-2026-001',
+    orderId: INITIAL_ORDERS[0],
+    percentage: 12,
+    amount: 85000,
+    bankdetailsid: INITIAL_BANK_DETAILS[0],
+    createdAt: todayISO,
+  },
+  {
+    _id: 'legal-102',
+    legalid: 'INV-2026-002',
+    orderId: INITIAL_ORDERS[1],
+    percentage: 12,
+    amount: 38000,
+    bankdetailsid: INITIAL_BANK_DETAILS[0],
+    createdAt: dateOffset(-3),
+  },
+  {
+    _id: 'legal-103',
+    legalid: 'INV-2026-003',
+    orderId: INITIAL_ORDERS[3],
+    percentage: 18,
+    amount: 62000,
+    bankdetailsid: INITIAL_BANK_DETAILS[1],
+    createdAt: dateOffset(-18),
+  },
+];
+
 // Helper to get from local store with seed fallback
 export const getLocalStore = (key, seedData) => {
   try {
@@ -897,10 +927,20 @@ export const handleMockRequest = (config) => {
 
   // --- Legal / Invoice / Quotation ---
   if (url.includes('/user/legal/save')) {
-    return { IsSuccess: true, Status: 200, Message: 'Invoice created successfully', Data: body };
+    const list = getLocalStore('legal', INITIAL_LEGAL);
+    const newEntry = {
+      ...body,
+      _id: body._id || 'legal-' + Date.now(),
+      legalid: 'INV-2026-' + (list.length + 101),
+      createdAt: new Date().toISOString(),
+    };
+    list.unshift(newEntry);
+    setLocalStore('legal', list);
+    return { IsSuccess: true, Status: 200, Message: 'Invoice created successfully', Data: newEntry };
   }
   if (url.includes('/user/legal')) {
-    return { IsSuccess: true, Status: 200, Message: 'Legal entries', Data: [] };
+    const list = getLocalStore('legal', INITIAL_LEGAL);
+    return { IsSuccess: true, Status: 200, Message: 'Legal entries', Data: list };
   }
 
   // --- Reports Analytics ---

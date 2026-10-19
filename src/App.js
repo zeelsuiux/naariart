@@ -23,6 +23,7 @@ import './utils/theme';
 import { storage } from './utils/storage';
 import { LoadingProvider } from './contexts/LoadingContext.js';
 import Invoice from './components/Invoice.js';
+import InvoiceView from './components/InvoiceView.js';
 import CalendarPage from './components/CalendarPage.js';
 import Home from './components/Home.js';
 import About from './components/About.js';
@@ -235,6 +236,8 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/collaborate" element={<Collaborate />} />
                 <Route path="/collaborator" element={<Collaborate />} />
+                <Route path="/invoice-view" element={<InvoiceView />} />
+                <Route path="/invoice-view/:orderId" element={<InvoiceView />} />
                 <Route path="/login" element={<Login onLogin={handleLogin} />} />
 
                 <Route path="/dashboard" element={<ProtectedRoute isLoggedIn={isLoggedIn}><Dashboard onLogout={handleLogout} /></ProtectedRoute>} />

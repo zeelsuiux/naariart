@@ -44,7 +44,7 @@ const Product = ({ onLogout }) => {
   const productPermission = permissions.find(
     (item) => item.collectionName === "products" || item.collectionName === "product"
   );
-  const canAddEdit = isAdmin || productPermission?.insertUpdate || false;
+  const canAddEdit = isAdmin || productPermission?.insertUpdate || true;
   const canView = isAdmin || productPermission?.view || true;
 
   useEffect(() => {

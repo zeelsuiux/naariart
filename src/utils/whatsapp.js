@@ -20,6 +20,69 @@ export const openWhatsApp = (phone, text) => {
   window.open(url, '_blank');
 };
 
+export const getInvoicePublicUrl = (orderId) => {
+  try {
+    const origin = window.location.origin;
+    const pathname = window.location.pathname.replace(/\/+$/, '');
+    return `${origin}${pathname}/#/invoice-view?orderId=${encodeURIComponent(orderId || '')}`;
+  } catch {
+    return `https://zeelsuiux.github.io/naariart/#/invoice-view?orderId=${encodeURIComponent(orderId || '')}`;
+  }
+};
+
+export const sendOrderInvoiceViaWhatsApp = (order) => {
+  const customer = order?.customerId || {};
+  const customerName = customer?.fullName || customer?.name || 'Valued Client';
+  const customerPhone = customer?.mobileNumber || customer?.mobile || customer?.phone || '';
+
+  const total = Number(order?.sellingPrice || order?.totalPrice || 0);
+  const advance = Number(order?.advancePayment || order?.advanceAmount || 0);
+  const due = total - advance;
+  const orderId = order?.orderId || order?._id || 'ORD-001';
+  const outfitName =
+    order?.productName ||
+    order?.outfitTypeName ||
+    order?.outfitTypeId?.name ||
+    order?.outfitType ||
+    'Bespoke Couture Outfit';
+  const deliveryDate = order?.deliveryDate
+    ? new Date(order.deliveryDate).toLocaleDateString('en-GB')
+    : 'As scheduled';
+
+  const invoiceUrl = getInvoicePublicUrl(orderId);
+
+  const message = `🧾 *NAARI ART - OFFICIAL TAX INVOICE* 🧾
+
+Dear *${customerName}*,
+
+Greetings from *Naari Art Haute Couture Atelier, Surat*! 🙏
+Here is your official tax invoice receipt:
+
+━━━━━━━━━━━━━━━━━━━
+🧾 *Invoice / Order No:* ${orderId}
+👗 *Outfit:* ${outfitName}
+📅 *Invoice Date:* ${new Date(order?.createdAt || Date.now()).toLocaleDateString('en-GB')}
+📦 *Estimated Delivery:* ${deliveryDate}
+━━━━━━━━━━━━━━━━━━━
+
+💰 *PAYMENT SUMMARY:*
+• Total Order Value: *₹ ${total.toLocaleString('en-IN')}*
+• Advance Received: *₹ ${advance.toLocaleString('en-IN')}*
+• Net Balance Due: *₹ ${due > 0 ? due.toLocaleString('en-IN') : '0 (Fully Paid)'}*
+
+📄 *VIEW & DOWNLOAD INVOICE PDF:*
+👉 ${invoiceUrl}
+
+━━━━━━━━━━━━━━━━━━━
+📍 *Studio Address:*
+24, Ugameshwar Bunglow, Nr Taapi Arcade, Opel Gold, Mota Varachha, Surat - 394101
+📞 *Helpline / WhatsApp:* +91 98250 00000
+
+Thank you for choosing *Naari Art*. We are honored to craft your bespoke occasion couture! 🌸`;
+
+  openWhatsApp(customerPhone, message);
+};
+
 export const sendInvoiceViaWhatsApp = (item) => {
   const order = item?.orderId || {};
   const customer = order?.customerId || {};
@@ -30,17 +93,19 @@ export const sendInvoiceViaWhatsApp = (item) => {
   const advance = Number(order?.advanceAmount || 0);
   const due = total - advance;
   const legalId = item?.legalid || 'INV-001';
-  const orderId = order?.orderId || 'ORD-001';
+  const orderId = order?.orderId || order?._id || 'ORD-001';
   const deliveryDate = order?.deliveryDate
     ? new Date(order.deliveryDate).toLocaleDateString('en-GB')
     : 'As discussed';
 
-  const message = `✨ *NAARI ART - INVOICE & ORDER CONFIRMATION* ✨
+  const invoiceUrl = getInvoicePublicUrl(orderId);
+
+  const message = `✨ *NAARI ART - OFFICIAL TAX INVOICE* ✨
 
 Dear *${customerName}*,
 
-Greetings from *Naari Art Couture Atelier, Surat*! 🙏
-Here is your official invoice summary:
+Greetings from *Naari Art Haute Couture Atelier, Surat*! 🙏
+Here is your official tax invoice details:
 
 ━━━━━━━━━━━━━━━━━━━
 🧾 *Invoice No:* ${legalId}
@@ -53,6 +118,9 @@ Here is your official invoice summary:
 • Total Amount: *₹ ${total.toLocaleString('en-IN')}*
 • Advance Received: *₹ ${advance.toLocaleString('en-IN')}*
 • Net Due / Balance: *₹ ${due > 0 ? due.toLocaleString('en-IN') : '0 (Fully Paid)'}*
+
+📄 *VIEW & DOWNLOAD INVOICE PDF:*
+👉 ${invoiceUrl}
 
 ━━━━━━━━━━━━━━━━━━━
 📍 *Studio Address:*

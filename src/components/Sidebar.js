@@ -123,7 +123,7 @@ const Sidebar = ({ onLogout }) => {
         { id: 'reports', label: 'Reports & Analytics', path: '/reports', icon: <FiBarChart2 /> },
         { id: 'invoice', label: 'Invoices & Bills', path: '/invoice', icon: <FiDollarSign /> },
         { id: 'export', label: 'Export Data (Excel)', icon: <FiDownloadCloud />, isExport: true, visible: isAdmin },
-        { id: 'settings', label: 'Atelier Settings', path: '/settings', icon: <FiSettings />, visible: canViewSettings },
+        { id: 'settings', label: 'Settings', path: '/settings', icon: <FiSettings /> },
       ],
     },
   ];

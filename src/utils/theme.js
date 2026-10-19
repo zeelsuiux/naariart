@@ -104,6 +104,103 @@ export const applyTheme = (primaryHex) => {
     root.style.setProperty('--pub-peach-light', primaryDimLight);
   }
 
+  // Inject or update global dynamic theme stylesheet
+  if (typeof document !== 'undefined') {
+    let styleTag = document.getElementById('naari-dynamic-theme-style');
+    if (!styleTag) {
+      styleTag = document.createElement('style');
+      styleTag.id = 'naari-dynamic-theme-style';
+      document.head.appendChild(styleTag);
+    }
+    styleTag.textContent = `
+      :root {
+        --primary-color: ${primaryHex} !important;
+        --primary-hover: ${primaryHover} !important;
+        --primary-dark: ${primaryDark} !important;
+        --primary-darkest: ${primaryDarkest} !important;
+        --primary-light: ${primaryLight} !important;
+        --primary-dim-light: ${primaryDimLight} !important;
+        --primary-orange-color: ${primaryOrangeColor} !important;
+        --primary-gradient: linear-gradient(135deg, ${primaryHex} 0%, ${gradientSecond} 100%) !important;
+        --secondary-gradient: linear-gradient(135deg, ${gradientSecond} 0%, ${secondaryGradSecond} 100%) !important;
+        --sidebar-bg-gradient: ${sidebarGradient} !important;
+        --pub-primary: ${primaryHex} !important;
+        --pub-primary-hover: ${primaryHover} !important;
+        --pub-accent: ${gradientSecond} !important;
+        --pub-peach-light: ${primaryDimLight} !important;
+      }
+
+      .public-site {
+        --pub-primary: ${primaryHex} !important;
+        --pub-primary-hover: ${primaryHover} !important;
+        --pub-accent: ${gradientSecond} !important;
+        --pub-peach-light: ${primaryDimLight} !important;
+        --pub-border-focus: ${primaryHex} !important;
+      }
+
+      /* Buttons & Tabs across software and visitor site */
+      .mm-btn-primary,
+      .btn-create-primary,
+      .login-button,
+      .pub-btn-primary,
+      .public-site .pub-btn-primary,
+      .public-site .header-cta,
+      .public-site .pub-cta-banner .pub-btn-primary,
+      .public-site .contact-submit-btn,
+      .public-site .collab-submit-btn {
+        background: linear-gradient(135deg, ${primaryHex} 0%, ${gradientSecond} 100%) !important;
+        border-color: ${primaryHex} !important;
+        color: #FFFFFF !important;
+      }
+
+      .mm-btn-primary:hover,
+      .btn-create-primary:hover,
+      .login-button:hover,
+      .pub-btn-primary:hover,
+      .public-site .pub-btn-primary:hover,
+      .public-site .header-cta:hover,
+      .public-site .contact-submit-btn:hover,
+      .public-site .collab-submit-btn:hover {
+        background: ${primaryHover} !important;
+        border-color: ${primaryHover} !important;
+      }
+
+      .tab-button.active,
+      .tabs .tab.active,
+      .mm-tabs .mm-tab.active,
+      .public-site .pub-pill.active,
+      .public-site .nav-link.active {
+        background: ${primaryHex} !important;
+        color: #FFFFFF !important;
+        border-color: ${primaryHex} !important;
+      }
+
+      .mm-sidebar,
+      .sidebar {
+        background: ${sidebarGradient} !important;
+      }
+
+      .sidebar-link-single.active {
+        background: rgba(255, 255, 255, 0.18) !important;
+        border-left: 4px solid #FFFFFF !important;
+      }
+
+      /* Public site accent highlights */
+      .public-site .hero-badge,
+      .public-site .pub-pill,
+      .public-site .section-tag {
+        color: ${primaryHex} !important;
+        border-color: ${primaryLight} !important;
+      }
+
+      .public-site .price-tag,
+      .public-site .feature-icon,
+      .public-site .contact-icon-box {
+        color: ${primaryHex} !important;
+      }
+    `;
+  }
+
   const rgb = hexToRgb(primaryHex);
   localStorage.setItem('naari_theme_color', primaryHex);
   localStorage.setItem('naari_theme_rgb', JSON.stringify(rgb));

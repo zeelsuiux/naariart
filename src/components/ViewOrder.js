@@ -7,7 +7,7 @@ import { storage } from '../utils/storage';
 import { orderAPI } from '../services/api';
 import { FiArrowLeft, FiEdit2 } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
-import { sendOrderQuotationViaWhatsApp } from '../utils/whatsapp';
+import { sendOrderInvoiceViaWhatsApp } from '../utils/whatsapp';
 
 const ViewOrder = ({ onLogout }) => {
   const user = JSON.parse(localStorage.getItem("naari_user"));
@@ -246,7 +246,7 @@ const ViewOrder = ({ onLogout }) => {
               <button
                 type="button"
                 className="mm-btn-secondary"
-                onClick={() => sendOrderQuotationViaWhatsApp(order)}
+                onClick={() => sendOrderInvoiceViaWhatsApp(order)}
                 style={{
                   background: '#25D366',
                   color: '#FFFFFF',
@@ -255,9 +255,9 @@ const ViewOrder = ({ onLogout }) => {
                   alignItems: 'center',
                   gap: '6px'
                 }}
-                title="Send Order Estimate & Invoice via WhatsApp"
+                title="Send Official Tax Invoice via WhatsApp"
               >
-                <FaWhatsapp size={15} /> WhatsApp
+                <FaWhatsapp size={15} /> Send Invoice
               </button>
             )}
           </div>

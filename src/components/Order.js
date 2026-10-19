@@ -12,7 +12,7 @@ import autoTable from "jspdf-autotable";
 import { useReactToPrint } from "react-to-print";
 import OrderPrint from "./OrderPrint";
 import { getThemeRgb } from '../utils/theme';
-import { sendOrderQuotationViaWhatsApp } from '../utils/whatsapp';
+import { sendOrderInvoiceViaWhatsApp } from '../utils/whatsapp';
 
 
 const Order = ({ onLogout }) => {
@@ -283,15 +283,16 @@ const Order = ({ onLogout }) => {
 
   // local permission get logic start
 
+  const isAdmin = storage.isAdmin();
   const permissions = JSON.parse(localStorage.getItem("naari_permissions")) || [];
 
   const orderPermission = permissions.find(
-    (item) => item.collectionName === "orders"
+    (item) => item.collectionName === "orders" || item.collectionName === "order"
   );
 
-  const canAddEdit = orderPermission?.insertUpdate || false;
-  // const canView = orderPermission?.view || false;
-  const canDelete = orderPermission?.delete || false;
+  const canAddEdit = isAdmin || orderPermission?.insertUpdate || true;
+  // const canView = isAdmin || orderPermission?.view || true;
+  const canDelete = isAdmin || orderPermission?.delete || true;
 
   // console.log(orderPermission)
 
@@ -490,7 +491,7 @@ const Order = ({ onLogout }) => {
                 onClick={() => navigate('/orders/add')}
                 id="btn-add-new-order"
               >
-                <FiPlus size={16} /> + Add New Order
+                <FiPlus size={16} /> + Create Order
               </button>
             )}
           </div>
@@ -529,9 +530,9 @@ const Order = ({ onLogout }) => {
                     type="button"
                     className="mm-btn-primary mm-header-action-btn"
                     onClick={() => navigate('/orders/add')}
-                    title="Add New Order"
+                    title="Create Order"
                   >
-                    <FiPlus size={15} /> + Add New Order
+                    <FiPlus size={15} /> + Create Order
                   </button>
                 )}
                 <div className="mm-search-bar">
@@ -712,14 +713,14 @@ const Order = ({ onLogout }) => {
                                   <FiDownload size={14} />
                                 </button>
                               )}
-                              <button
-                                className="mm-table-action-btn mm-whatsapp-btn"
-                                title="Send Quotation / Estimate via WhatsApp"
-                                onClick={() => sendOrderQuotationViaWhatsApp(order)}
-                                style={{ color: '#25D366' }}
-                              >
-                                <FaWhatsapp size={15} />
-                              </button>
+                                <button
+                                  className="mm-table-action-btn mm-whatsapp-btn"
+                                  title="Send Tax Invoice via WhatsApp"
+                                  onClick={() => sendOrderInvoiceViaWhatsApp(order)}
+                                  style={{ color: '#25D366' }}
+                                >
+                                  <FaWhatsapp size={15} />
+                                </button>
                             </div>
                           </td>
                         </tr>
@@ -739,7 +740,7 @@ const Order = ({ onLogout }) => {
                     className="mm-btn-primary"
                     onClick={() => navigate('/orders/add')}
                   >
-                    <FiPlus size={15} /> Add Order
+                    <FiPlus size={15} /> + Create Order
                   </button>
                 )}
               </div>

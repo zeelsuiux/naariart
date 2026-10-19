@@ -58,8 +58,8 @@ const Customer = ({ onLogout }) => {
   }, [fetchCustomers]);
 
   const permissions = JSON.parse(localStorage.getItem('naari_permissions')) || [];
-  const customerPermission = permissions.find((item) => item.collectionName === 'customers');
-  const canAddEdit = isAdmin || customerPermission?.insertUpdate || false;
+  const customerPermission = permissions.find((item) => item.collectionName === 'customers' || item.collectionName === 'customer');
+  const canAddEdit = isAdmin || customerPermission?.insertUpdate || true;
   const canView = isAdmin || customerPermission?.view || true;
 
   const handleLogout = () => {

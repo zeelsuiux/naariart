@@ -6556,7 +6556,7 @@ header.mm-topbar {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: linear-gradient(135deg, #B84F2A, #D86F45);
+  background: var(--primary-gradient, linear-gradient(135deg, var(--primary-color), var(--primary-hover))) !important;
   color: #FFFFFF !important;
   border: 0;
   border-radius: 8px;
@@ -6571,7 +6571,7 @@ header.mm-topbar {
 
 .btn-create-primary:hover,
 .mm-btn-primary:hover {
-  background: linear-gradient(135deg, #9C3E25, #C25E38);
+  background: var(--primary-hover, #9C3E25) !important;
   box-shadow: 0 4px 12px rgba(184, 79, 42, 0.4);
 }
 
@@ -6711,13 +6711,13 @@ header.mm-topbar {
 }
 
 .mm-hero-btn.primary {
-  background: linear-gradient(135deg, #B84F2A, #D86F45);
+  background: var(--primary-gradient, linear-gradient(135deg, var(--primary-color), var(--primary-hover))) !important;
   color: #FFFFFF !important;
   box-shadow: 0 4px 14px rgba(184, 79, 42, 0.25);
 }
 
 .mm-hero-btn.primary:hover {
-  background: linear-gradient(135deg, #9C3E25, #C25E38);
+  background: var(--primary-hover, #9C3E25) !important;
   transform: translateY(-2px);
   box-shadow: 0 6px 18px rgba(184, 79, 42, 0.35);
 }
@@ -6730,8 +6730,8 @@ header.mm-topbar {
 }
 
 .mm-hero-btn.secondary:hover {
-  border-color: #B84F2A;
-  color: #B84F2A !important;
+  border-color: var(--primary-color);
+  color: var(--primary-color) !important;
   transform: translateY(-2px);
 }
 
