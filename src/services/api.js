@@ -265,9 +265,9 @@ api.interceptors.response.use(
         headers: {},
         config: error.config,
       });
-    } else if (error.response?.status === 400) {
+    } else if (error?.response?.status === 400) {
       // Return error message from .Message key for 400 status
-      const errorMessage = error.response.data?.Message || 'Bad Request';
+      const errorMessage = error?.response?.data?.Message || 'Bad Request';
       return Promise.reject(new Error(errorMessage));
     }
     return Promise.reject(error);

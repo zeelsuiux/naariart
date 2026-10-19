@@ -3,11 +3,13 @@
 export const storage = {
   // Save authentication data
   setAuthData: (token, userData) => {
-    localStorage.setItem('naari_token', token);
-    localStorage.setItem('naari_user', JSON.stringify(userData));
+    localStorage.setItem('naari_token', token || '');
+    localStorage.setItem('naari_user', JSON.stringify(userData || {}));
     // Store user permissions separately for easy access
-    if (userData.roleid && userData.roleid.permissions) {
+    if (userData?.roleid?.permissions) {
       localStorage.setItem('naari_permissions', JSON.stringify(userData.roleid.permissions));
+    } else if (Array.isArray(userData?.permissions)) {
+      localStorage.setItem('naari_permissions', JSON.stringify(userData.permissions));
     }
   },
 

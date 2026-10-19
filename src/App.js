@@ -54,22 +54,145 @@ class ErrorBoundary extends React.Component {
     console.error('Error caught by boundary:', error, errorInfo);
   }
 
+  handleReload = () => {
+    this.setState({ hasError: false, error: null });
+    window.location.reload();
+  };
+
+  handleResetHome = () => {
+    this.setState({ hasError: false, error: null });
+    window.location.hash = '#/';
+    window.location.reload();
+  };
+
+  handleResetSession = () => {
+    try {
+      storage.clearAuthData();
+    } catch (e) {
+      localStorage.clear();
+    }
+    this.setState({ hasError: false, error: null });
+    window.location.hash = '#/login';
+    window.location.reload();
+  };
+
   render() {
     if (this.state.hasError) {
+      const errorMsg = this.state.error?.message || this.state.error?.toString() || 'Unknown UI Error';
       return (
-        <div style={{ 
-          padding: '20px', 
-          textAlign: 'center',
-          fontFamily: 'Arial, sans-serif'
+        <div style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#FAF7F2',
+          padding: '24px',
+          fontFamily: "'Plus Jakarta Sans', system-ui, -apple-system, sans-serif"
         }}>
-          <h2>Something went wrong.</h2>
-          <p>Please refresh the page and try again.</p>
-          <details style={{ marginTop: '20px', textAlign: 'left' }}>
-            <summary>Error Details</summary>
-            <pre style={{ background: '#f5f5f5', padding: '10px', borderRadius: '4px' }}>
-              {this.state.error && this.state.error.toString()}
-            </pre>
-          </details>
+          <div style={{
+            maxWidth: '520px',
+            width: '100%',
+            backgroundColor: '#FFFFFF',
+            borderRadius: '16px',
+            padding: '36px 32px',
+            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.08)',
+            border: '1px solid #EBE4DA',
+            textAlign: 'center'
+          }}>
+            <div style={{
+              width: '56px',
+              height: '56px',
+              borderRadius: '50%',
+              backgroundColor: '#FDF2ED',
+              color: '#B84F2A',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '26px',
+              marginBottom: '18px',
+              fontWeight: '700'
+            }}>
+              !
+            </div>
+            <h2 style={{ fontSize: '22px', fontWeight: '700', color: '#1E1B18', margin: '0 0 10px' }}>
+              Something went wrong
+            </h2>
+            <p style={{ fontSize: '14.5px', color: '#685D52', margin: '0 0 24px', lineHeight: 1.5 }}>
+              A temporary display error occurred. You can refresh or return to the main portal smoothly.
+            </p>
+
+            <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '20px' }}>
+              <button
+                type="button"
+                onClick={this.handleReload}
+                style={{
+                  backgroundColor: '#B84F2A',
+                  color: '#FFFFFF',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: '999px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 12px rgba(184, 79, 42, 0.25)'
+                }}
+              >
+                ↻ Refresh Page
+              </button>
+              <button
+                type="button"
+                onClick={this.handleResetHome}
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  color: '#1E1B18',
+                  border: '1px solid #D5C9B8',
+                  padding: '10px 20px',
+                  borderRadius: '999px',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  cursor: 'pointer'
+                }}
+              >
+                Go to Home
+              </button>
+              <button
+                type="button"
+                onClick={this.handleResetSession}
+                style={{
+                  backgroundColor: 'transparent',
+                  color: '#8A7A6B',
+                  border: 'none',
+                  padding: '10px 14px',
+                  fontSize: '13px',
+                  fontWeight: '500',
+                  cursor: 'pointer',
+                  textDecoration: 'underline'
+                }}
+              >
+                Reset Studio Session
+              </button>
+            </div>
+
+            <details style={{ textAlign: 'left', marginTop: '16px' }}>
+              <summary style={{ cursor: 'pointer', fontSize: '12.5px', color: '#8A7A6B', outline: 'none' }}>
+                Error Details
+              </summary>
+              <pre style={{
+                background: '#FAF7F2',
+                padding: '12px',
+                borderRadius: '8px',
+                fontSize: '11.5px',
+                color: '#B84F2A',
+                overflowX: 'auto',
+                marginTop: '8px',
+                border: '1px solid #EBE4DA',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word'
+              }}>
+                {errorMsg}
+              </pre>
+            </details>
+          </div>
         </div>
       );
     }
