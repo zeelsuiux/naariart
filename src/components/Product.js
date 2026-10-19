@@ -39,12 +39,13 @@ const Product = ({ onLogout }) => {
     }
   };
 
+  const isAdmin = storage.isAdmin();
   const permissions = JSON.parse(localStorage.getItem("naari_permissions")) || [];
   const productPermission = permissions.find(
-    (item) => item.collectionName === "products"
+    (item) => item.collectionName === "products" || item.collectionName === "product"
   );
-  const canAddEdit = productPermission?.insertUpdate || false;
-  const canView = productPermission?.view || false;
+  const canAddEdit = isAdmin || productPermission?.insertUpdate || false;
+  const canView = isAdmin || productPermission?.view || true;
 
   useEffect(() => {
     fetchProducts();

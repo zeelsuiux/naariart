@@ -52,10 +52,19 @@ const Login = ({ onLogin }) => {
           ismaster: true,
           permissions: [
             { collectionName: 'customer', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'customers', view: true, insertUpdate: true, delete: true },
             { collectionName: 'order', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'orders', view: true, insertUpdate: true, delete: true },
             { collectionName: 'lead', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'leads', view: true, insertUpdate: true, delete: true },
             { collectionName: 'product', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'task', view: true, insertUpdate: true, delete: true }
+            { collectionName: 'products', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'task', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'tasks', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'staff', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'settings', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'reports', view: true, insertUpdate: true, delete: true },
+            { collectionName: 'finance', view: true, insertUpdate: true, delete: true }
           ]
         }
       };
