@@ -58,7 +58,7 @@ export const sendOrderInvoiceViaWhatsApp = (order) => {
 
 Dear *${customerName}*,
 
-Greetings from *Naari Art Haute Couture Atelier, Surat*! 🙏
+Greetings from *Naari Art - Designer Studio, Surat*! 🙏
 Here is your official tax invoice receipt:
 
 ━━━━━━━━━━━━━━━━━━━
@@ -107,7 +107,7 @@ export const sendInvoiceViaWhatsApp = (item) => {
 
 Dear *${customerName}*,
 
-Greetings from *Naari Art Haute Couture Atelier, Surat*! 🙏
+Greetings from *Naari Art - Designer Studio, Surat*! 🙏
 Here is your official tax invoice details:
 
 ━━━━━━━━━━━━━━━━━━━
@@ -153,7 +153,7 @@ export const sendOrderQuotationViaWhatsApp = (order) => {
 
 Dear *${customerName}*,
 
-Thank you for trusting *Naari Art Atelier* with your custom tailoring! ✨
+Thank you for trusting *Naari Art - Designer Studio* with your custom tailoring! ✨
 
 ━━━━━━━━━━━━━━━━━━━
 🆔 *Order / Quotation No:* ${orderId}
@@ -183,14 +183,14 @@ export const sendCollaboratorWhatsApp = (collab) => {
 
   const message = `Namaste *${name}* (@${handle.replace('@', '')})! 🙏
 
-This is the PR & Influencer Collaboration Team from *Naari Art Atelier, Surat*.
+This is the PR & Influencer Collaboration Team from *Naari Art - Designer Studio, Surat*.
 
 We received your collaboration inquiry through our website. We loved your aesthetic and would like to discuss our upcoming couture collection collaboration with you! 👗✨
 
 Could you please share your media kit or convenient time for a quick 5-minute call?
 
 Warm regards,
-*PR Team | Naari Art Couture*
+*PR Team | Naari Art - Designer Studio*
 📞 +91 98250 00000`;
 
   openWhatsApp(phone, message);

@@ -75,7 +75,7 @@ const Contact = () => {
       });
 
       setSuccessMessage(
-        'Thank you! Your enquiry has been received by our atelier. Our stylist will reach out to you within 24 hours.'
+        'Thank you! Your enquiry has been received by our designer studio. Our stylist will reach out to you within 24 hours.'
       );
     } catch (error) {
       console.error('Error submitting inquiry:', error);
@@ -93,7 +93,7 @@ const Contact = () => {
         {/* Contact Hero */}
         <div className="contact-hero">
           <div className="hero-badge">
-            <FiStar /> The Naari Art Studio
+            <FiStar /> Naari Art - Designer Studio
           </div>
           <h1 className="contact-title">Let’s craft something memorable together.</h1>
           <p className="public-lede">
@@ -106,7 +106,7 @@ const Contact = () => {
           {/* Studio Information Column */}
           <div className="contact-info-col">
             <div className="contact-info-card">
-              <h3>Atelier Studio & Visits</h3>
+              <h3>Designer Studio & Visits</h3>
               <p className="info-lead">
                 Visit our design studio in Surat to experience handloom textiles, view embroidery swatches, and have your measurements taken in person.
               </p>
@@ -125,7 +125,7 @@ const Contact = () => {
                   <div>
                     <strong>Telephone & WhatsApp</strong>
                     <p><a href="tel:+919825123456">+91 98251 23456</a></p>
-                    <small>Direct line to atelier stylists</small>
+                    <small>Direct line to designer studio stylists</small>
                   </div>
                 </div>
 

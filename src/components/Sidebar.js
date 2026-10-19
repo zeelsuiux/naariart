@@ -21,7 +21,6 @@ import {
   FiChevronLeft,
   FiChevronRight,
   FiDownloadCloud,
-  FiSearch,
 } from 'react-icons/fi';
 import { storage } from '../utils/storage';
 import logoImg from '../assets/naari-logo.png';
@@ -51,7 +50,6 @@ const Sidebar = ({ onLogout }) => {
   const isAdmin = storage.isAdmin();
   const userName = user?.fullName || user?.name || user?.userName || (isAdmin ? 'Admin' : 'Staff');
   const userRole = storage.getUserRole() || (isAdmin ? 'Administrator' : 'Staff Member');
-  const userInitial = (userName.charAt(0) || 'N').toUpperCase();
 
   // Active item resolver
   const getActiveItem = () => {
@@ -82,17 +80,6 @@ const Sidebar = ({ onLogout }) => {
     return p?.view === true;
   };
 
-  const canViewSettings = [
-    'roles',
-    'worktypes',
-    'measurements',
-    'addons',
-    'incometypes',
-    'expensetypes',
-    'accounting',
-    'bankdetails',
-    'expensealerts',
-  ].some(hasPermission);
 
   // Grouped Menu Items (My Metaji Style)
   const menuGroups = [
@@ -138,10 +125,6 @@ const Sidebar = ({ onLogout }) => {
     window.dispatchEvent(new CustomEvent('naari-open-export'));
   };
 
-  const handleCommandPaletteClick = () => {
-    setIsMobileMenuOpen(false);
-    window.dispatchEvent(new CustomEvent('naari-open-command-palette'));
-  };
 
   const handleLogoutClick = (e) => {
     e.preventDefault();
@@ -168,34 +151,48 @@ const Sidebar = ({ onLogout }) => {
             const isActive = activeItem === item.id;
             if (item.isExport) {
               return (
-                <button
-                  type="button"
-                  key={item.id}
-                  className="sidebar-link-single export-sidebar-btn"
-                  onClick={handleExportClick}
-                  title="Export records to Excel (.xlsx)"
-                >
-                  <span className="sb-icon-wrap">{item.icon}</span>
-                  <span className="sb-link-label">{item.label}</span>
-                  <span className="sb-tag-pill">Admin</span>
-                </button>
+                <div key={item.id} className="sidebar-link-wrapper">
+                  <button
+                    type="button"
+                    className="sidebar-link-single export-sidebar-btn"
+                    onClick={handleExportClick}
+                    title={isMini ? undefined : 'Export records to Excel (.xlsx)'}
+                    aria-label={item.label}
+                  >
+                    <span className="sb-icon-wrap">{item.icon}</span>
+                    <span className="sb-link-label">{item.label}</span>
+                    <span className="sb-tag-pill">Admin</span>
+                  </button>
+                  {isMini && (
+                    <span className="sidebar-floating-tooltip" role="tooltip">
+                      {item.label}
+                    </span>
+                  )}
+                </div>
               );
             }
             return (
-              <Link
-                key={item.id}
-                to={item.path}
-                className={`sidebar-link-single ${isActive ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNav(item.path);
-                }}
-                title={item.label}
-              >
-                <span className="sb-icon-wrap">{item.icon}</span>
-                <span className="sb-link-label">{item.label}</span>
-                {isActive && <span className="sb-active-indicator" />}
-              </Link>
+              <div key={item.id} className="sidebar-link-wrapper">
+                <Link
+                  to={item.path}
+                  className={`sidebar-link-single ${isActive ? 'active' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav(item.path);
+                  }}
+                  title={isMini ? undefined : item.label}
+                  aria-label={item.label}
+                >
+                  <span className="sb-icon-wrap">{item.icon}</span>
+                  <span className="sb-link-label">{item.label}</span>
+                  {isActive && <span className="sb-active-indicator" />}
+                </Link>
+                {isMini && (
+                  <span className="sidebar-floating-tooltip" role="tooltip">
+                    {item.label}
+                  </span>
+                )}
+              </div>
             );
           })}
         </div>
@@ -217,12 +214,14 @@ const Sidebar = ({ onLogout }) => {
         </button>
 
         <div className="mm-mobile-brand">
-          <img src={logoImg} alt="Naari Art" className="mm-mobile-logo" />
+          <img src={logoImg} alt="Naari Art - Designer Studio" className="mm-mobile-logo" />
           <span>Naari Art</span>
         </div>
 
         <div className="mm-mobile-user">
-          <div className="sidebar-avatar sm">{userInitial}</div>
+          <div className="sidebar-avatar sm">
+            <img src={logoImg} alt="Naari Art" className="sidebar-avatar-img" />
+          </div>
         </div>
       </div>
 
@@ -243,17 +242,17 @@ const Sidebar = ({ onLogout }) => {
         <div className="brand mm-brand">
           <Link to="/dashboard" className="brand-link" onClick={() => setIsMobileMenuOpen(false)}>
             {isMini ? (
-              <div className="brand-mini-mark" title="Naari Art Studio">
-                NA
+              <div className="brand-mini-logo-wrap" title="Naari Art - Designer Studio">
+                <img src={logoImg} alt="Naari Art - Designer Studio" className="brand-mini-logo" />
               </div>
             ) : (
               <>
                 <div className="brand-logo-wrap">
-                  <img src={logoImg} alt="Naari Art" className="brand-logo" />
+                  <img src={logoImg} alt="Naari Art - Designer Studio" className="brand-logo" />
                 </div>
                 <div className="brand-text-col">
                   <span className="brand-title">Naari Art</span>
-                  <span className="brand-tag">Atelier Studio</span>
+                  <span className="brand-tag">Designer Studio</span>
                 </div>
               </>
             )}
@@ -265,26 +264,9 @@ const Sidebar = ({ onLogout }) => {
             className="sidebar-collapse-btn"
             onClick={toggleMini}
             title={isMini ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            aria-label={isMini ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
             {isMini ? <FiChevronRight size={14} /> : <FiChevronLeft size={14} />}
-          </button>
-        </div>
-
-        {/* Quick Search (Ctrl + K) Button */}
-        <div className="sidebar-quick-search-wrap">
-          <button
-            type="button"
-            className="sidebar-quick-search-btn"
-            onClick={handleCommandPaletteClick}
-            title="Quick Navigation & Search (Ctrl + K)"
-          >
-            <FiSearch size={14} className="sb-search-icon" />
-            {!isMini && (
-              <>
-                <span className="sb-search-placeholder">Search or jump to...</span>
-                <span className="sb-search-shortcut">Ctrl+K</span>
-              </>
-            )}
           </button>
         </div>
 
@@ -297,7 +279,9 @@ const Sidebar = ({ onLogout }) => {
         <div className="sidebar-footer mm-sidebar-footer">
           {!isMini ? (
             <div className="sidebar-user-card" title={userName}>
-              <div className="sidebar-avatar">{userInitial}</div>
+              <div className="sidebar-avatar">
+                <img src={logoImg} alt="Naari Art" className="sidebar-avatar-img" />
+              </div>
               <div className="sidebar-user-info">
                 <span className="sidebar-user-name">{userName}</span>
                 <span className="sidebar-role-pill">{userRole}</span>
@@ -305,7 +289,7 @@ const Sidebar = ({ onLogout }) => {
             </div>
           ) : (
             <div className="sidebar-avatar sm" title={`${userName} (${userRole})`}>
-              {userInitial}
+              <img src={logoImg} alt="Naari Art" className="sidebar-avatar-img" />
             </div>
           )}
 
@@ -314,6 +298,7 @@ const Sidebar = ({ onLogout }) => {
             className="sidebar-logout-icon-btn"
             onClick={handleLogoutClick}
             title="Log Out of System"
+            aria-label="Log Out of System"
           >
             <FiLogOut size={16} />
           </button>

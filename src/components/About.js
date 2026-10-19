@@ -22,7 +22,7 @@ const About = () => (
     <section className="about-story-section">
       <div className="about-story-grid">
         <div className="about-story-text">
-          <p className="public-eyebrow">Our Atelier Story</p>
+          <p className="public-eyebrow">Our Designer Studio Story</p>
           <h2>Where tradition meets modern grace.</h2>
           <p>
             Based in the textile heartland of Surat, Naari Art bridges centuries-old embroidery techniques with contemporary silhouettes designed for the modern Indian woman.
@@ -39,8 +39,8 @@ const About = () => (
 
         <div className="about-story-card">
           <div className="story-card-inner">
-            <img src={logoImg} alt="Naari Art Atelier" className="story-logo" />
-            <h3>Atelier Naari Art</h3>
+            <img src={logoImg} alt="Naari Art - Designer Studio" className="story-logo" />
+            <h3>Naari Art - Designer Studio</h3>
             <p className="story-quote">
               “A garment is not merely fabric stitched together; it is an intimate expression of joy, heritage, and the memories you create in it.”
             </p>
@@ -88,7 +88,7 @@ const About = () => (
     <section className="cta-banner">
       <div className="cta-inner">
         <p className="public-eyebrow" style={{ color: '#F4C7B7' }}>Visit Our Studio</p>
-        <h2>Experience the atelier firsthand.</h2>
+        <h2>Experience our designer studio firsthand.</h2>
         <p>Walk through our textile library, view ongoing artisan embroidery, and discuss your bespoke piece in person.</p>
         <div className="cta-actions">
           <Link className="public-button primary" to="/contact">

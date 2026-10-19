@@ -163,7 +163,7 @@ const Dashboard = ({ onLogout }) => {
 
             <div className="topbar-shop-badge">
               <span className="topbar-shop-dot" />
-              <span>Naari Art Studio</span>
+              <span>Naari Art - Designer Studio</span>
             </div>
           </div>
 
@@ -213,7 +213,7 @@ const Dashboard = ({ onLogout }) => {
             <div className="mm-hero-left">
               <div className="mm-hero-badge">
                 <span className="mm-hero-dot" />
-                <span>Atelier Studio</span>
+                <span>Designer Studio</span>
                 <span style={{ opacity: 0.4 }}>•</span>
                 <span>
                   {new Date().toLocaleDateString('en-IN', {
@@ -230,7 +230,7 @@ const Dashboard = ({ onLogout }) => {
               <p className="mm-hero-sub">
                 <span>{deliveries.length} orders scheduled for delivery</span>
                 <span style={{ opacity: 0.5 }}>·</span>
-                <span>Production and atelier active</span>
+                <span>Production and designer studio active</span>
               </p>
             </div>
 

@@ -6024,6 +6024,7 @@ textarea.input-field {
 .sidebar.mm-sidebar.mini {
   width: 68px !important;
   min-width: 68px !important;
+  overflow: visible !important;
 }
 
 .sidebar.mm-sidebar.mini .brand.mm-brand {
@@ -6031,6 +6032,7 @@ textarea.input-field {
   flex-direction: column !important;
   align-items: center !important;
   gap: 8px !important;
+  overflow: visible !important;
 }
 
 .sidebar.mm-sidebar.mini .brand-logo-wrap,
@@ -6038,17 +6040,26 @@ textarea.input-field {
 .sidebar.mm-sidebar.mini .sb-link-label,
 .sidebar.mm-sidebar.mini .sidebar-section-title,
 .sidebar.mm-sidebar.mini .sb-active-indicator,
-.sidebar.mm-sidebar.mini .sidebar-user-info {
+.sidebar.mm-sidebar.mini .sidebar-user-info,
+.sidebar.mm-sidebar.mini .sb-tag-pill {
   display: none !important;
 }
 
 .sidebar.mm-sidebar.mini .sidebar-nav.mm-sidebar-nav {
-  padding: 12px 6px !important;
+  padding: 10px 6px !important;
+  overflow: visible !important;
+}
+
+.sidebar.mm-sidebar.mini .sidebar-link-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .sidebar.mm-sidebar.mini .sidebar-link-single {
   justify-content: center !important;
-  padding: 9px 0 !important;
+  padding: 8px 0 !important;
   width: 44px !important;
   margin: 0 auto 3px !important;
   gap: 0 !important;
@@ -6063,6 +6074,86 @@ textarea.input-field {
   flex-direction: column !important;
   align-items: center !important;
   gap: 8px !important;
+}
+
+/* Brand Mini Logo Image Wrap */
+.brand-mini-logo-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #FFFFFF;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.18s ease;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.brand-mini-logo-wrap:hover {
+  transform: scale(1.08);
+}
+
+.brand-mini-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.sidebar-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Sidebar Floating Tooltip for Mini Mode */
+.sidebar-link-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.sidebar-floating-tooltip {
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+  background: #111827;
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  z-index: 99999;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  letter-spacing: 0.2px;
+}
+
+.sidebar-floating-tooltip::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #111827 transparent transparent;
+}
+
+.sidebar-link-wrapper:hover .sidebar-floating-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
 }
 
 .brand-mini-mark {
@@ -6188,10 +6279,12 @@ textarea.input-field {
 .sidebar-nav.mm-sidebar-nav {
   flex: 1;
   overflow-y: auto;
-  padding: 16px 14px;
+  overflow-x: hidden;
+  padding: 10px 10px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
+  scrollbar-width: thin;
 }
 
 .sidebar-nav.mm-sidebar-nav::-webkit-scrollbar {

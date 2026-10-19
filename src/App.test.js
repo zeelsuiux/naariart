@@ -58,8 +58,38 @@ jest.mock('jspdf', () => {
 jest.mock('jspdf-autotable', () => jest.fn());
 
 import App from './App';
+import Sidebar from './components/Sidebar';
+import Collaborators from './components/Collaborators';
+import { sendCollaboratorWhatsApp } from './utils/whatsapp';
 
 test('renders the application shell and public pages', () => {
   render(<App />);
   expect(document.querySelector('.App')).toBeInTheDocument();
+});
+
+test('Sidebar renders branding as Designer Studio and no search button', () => {
+  const { container } = render(<Sidebar onLogout={jest.fn()} />);
+  expect(container.querySelector('.sidebar-quick-search-wrap')).toBeNull();
+  expect(container.textContent).toContain('Designer Studio');
+  expect(container.textContent).not.toContain('Atelier Studio');
+  const logo = container.querySelector('.brand-logo');
+  expect(logo).toBeInTheDocument();
+  expect(logo.getAttribute('alt')).toBe('Naari Art - Designer Studio');
+});
+
+test('Collaborators renders in proper mm-app-shell layout without unstyled admin-container', () => {
+  const { container } = render(<Collaborators onLogout={jest.fn()} />);
+  expect(container.querySelector('.settings-container.mm-app-shell')).toBeInTheDocument();
+  expect(container.querySelector('.main-content.mm-main')).toBeInTheDocument();
+  expect(container.querySelector('.admin-container')).toBeNull();
+});
+
+test('WhatsApp messages use strict brand name Naari Art - Designer Studio', () => {
+  const openSpy = jest.spyOn(window, 'open').mockImplementation(() => {});
+  sendCollaboratorWhatsApp({ fullName: 'Priya', phone: '9825123456' });
+  expect(openSpy).toHaveBeenCalled();
+  const sentText = decodeURIComponent(openSpy.mock.calls[0][0]);
+  expect(sentText).toContain('Naari Art - Designer Studio');
+  expect(sentText).not.toContain('Naari Art Atelier');
+  openSpy.mockRestore();
 });

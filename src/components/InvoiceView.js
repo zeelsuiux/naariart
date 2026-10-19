@@ -64,7 +64,7 @@ const InvoiceView = () => {
     doc.setTextColor(60, 60, 60);
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
-    doc.text('Bespoke Haute Couture Atelier', 15, 24);
+    doc.text('Designer Studio', 15, 24);
     doc.text('24, Ugameshwar Bunglow, Nr Taapi Arcade, Opel Gold', 15, 29);
     doc.text('Mota Varachha, Surat - 394101, Gujarat', 15, 34);
     doc.text('Phone: +91 98250 00000 | Email: contact@naariart.com', 15, 39);
@@ -193,7 +193,7 @@ const InvoiceView = () => {
     doc.setFontSize(8);
     doc.setTextColor(120, 120, 120);
     doc.text('Terms & Conditions: Bespoke tailored garments are customized exclusively for the client. Balance is payable upon delivery.', 15, 275);
-    doc.text('This is a computer-generated invoice from Naari Art Atelier.', 15, 280);
+    doc.text('This is a computer-generated invoice from Naari Art - Designer Studio.', 15, 280);
 
     doc.save(`NaariArt-Invoice-${order.orderId || 'INV'}.pdf`);
   };
@@ -246,7 +246,7 @@ const InvoiceView = () => {
             type="button"
             onClick={() => {
               const url = window.location.href;
-              const text = `🧾 *Naari Art Invoice Receipt*\nView or download your digital invoice here:\n${url}`;
+              const text = `🧾 *Naari Art - Designer Studio Invoice Receipt*\nView or download your digital invoice here:\n${url}`;
               openWhatsApp(customerMobile, text);
             }}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', padding: '8px 16px', borderRadius: '8px', background: '#25D366', border: 'none', color: '#FFFFFF', cursor: 'pointer', fontWeight: 600 }}
@@ -277,7 +277,7 @@ const InvoiceView = () => {
               <img src={logo} alt="Naari Art" style={{ height: '42px', width: 'auto' }} />
               <div>
                 <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 800, color: 'var(--primary-color)' }}>Naari Art</h1>
-                <span style={{ fontSize: '12px', color: '#6B635A', letterSpacing: '0.5px' }}>Bespoke Haute Couture Atelier</span>
+                <span style={{ fontSize: '12px', color: '#6B635A', letterSpacing: '0.5px' }}>Designer Studio</span>
               </div>
             </div>
             <p style={{ margin: '4px 0 0', fontSize: '12.5px', color: '#6B635A', lineHeight: 1.5 }}>

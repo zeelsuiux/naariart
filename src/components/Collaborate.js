@@ -90,10 +90,10 @@ const Collaborate = () => {
             <FiStar /> INFLUENCER & CREATOR PARTNERSHIPS
           </span>
           <h1 style={{ fontSize: 'clamp(28px, 4vw, 44px)', marginBottom: '14px', color: 'var(--pub-text-dark)' }}>
-            Collaborate with <span style={{ color: 'var(--pub-primary)' }}>Naari Art Atelier</span>
+            Collaborate with <span style={{ color: 'var(--pub-primary)' }}>Naari Art - Designer Studio</span>
           </h1>
           <p style={{ maxWidth: '680px', margin: '0 auto', color: 'var(--pub-text-muted)', fontSize: '15px' }}>
-            Are you a fashion creator, wedding blogger, bridal model, or celebrity stylist? Partner with our Surat luxury couture atelier for exclusive festive campaigns, bridal shoots, and bespoke styling.
+            Are you a fashion creator, wedding blogger, bridal model, or celebrity stylist? Partner with our Surat luxury couture designer studio for exclusive festive campaigns, bridal shoots, and bespoke styling.
           </p>
         </div>
 

@@ -23,7 +23,7 @@ const Home = () => (
             Explore Collection <FiArrowRight />
           </Link>
           <Link className="public-button secondary" to="/contact">
-            Book Atelier Appointment
+            Book Studio Appointment
           </Link>
         </div>
 
@@ -43,7 +43,7 @@ const Home = () => (
               <img src={logoImg} alt="Naari Art" className="hero-emblem-img" />
             </div>
             <div className="hero-card-meta">
-              <span className="hero-card-tag">Atelier Naari Art</span>
+              <span className="hero-card-tag">Naari Art - Designer Studio</span>
               <h3>Bespoke Craftsmanship</h3>
               <p>Every seam, motif, and drape is curated with patience and grace in our Surat studio.</p>
             </div>
@@ -159,7 +159,7 @@ const Home = () => (
     {/* CTA Banner */}
     <section className="cta-banner">
       <div className="cta-inner">
-        <p className="public-eyebrow" style={{ color: '#F4C7B7' }}>Visit Our Surat Atelier</p>
+        <p className="public-eyebrow" style={{ color: '#F4C7B7' }}>Visit Our Surat Studio</p>
         <h2>Ready to curate your timeless ensemble?</h2>
         <p>Book a personalized appointment at our studio or submit a custom inquiry online.</p>
         <div className="cta-actions">

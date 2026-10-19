@@ -163,9 +163,9 @@ const Collaborators = ({ onLogout }) => {
   };
 
   return (
-    <div className="admin-container">
-      <Sidebar onLogout={handleLogout} />
-      <div className="main-content">
+    <div className="settings-container mm-app-shell">
+      <Sidebar onLogout={handleLogout} activePage="collaborators" />
+      <main className="main-content mm-main">
         {/* Topbar */}
         <header className="mm-topbar">
           <div className="mm-topbar-left">
@@ -453,7 +453,7 @@ const Collaborators = ({ onLogout }) => {
             </div>
           </div>
         </div>
-      </div>
+      </main>
 
       {/* Edit Status & Reason Modal */}
       {editingItem && (

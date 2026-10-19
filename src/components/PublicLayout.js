@@ -16,7 +16,7 @@ const PublicLayout = ({ children }) => {
       <div className="public-topbar">
         <div className="public-topbar-inner">
           <span className="public-topbar-tag">
-            <FiStar /> Haute Couture & Bespoke Atelier
+            <FiStar /> Haute Couture & Designer Studio
           </span>
           <span className="public-topbar-text">
             Handcrafted Indian Silhouettes & Custom Bridal Stitching in Surat
@@ -31,10 +31,10 @@ const PublicLayout = ({ children }) => {
       <header className="public-header">
         <div className="public-header-inner">
           <Link className="public-brand" to="/" onClick={closeMobileNav}>
-            <img src={logoImg} alt="Naari Art" className="public-brand-logo" />
+            <img src={logoImg} alt="Naari Art - Designer Studio" className="public-brand-logo" />
             <div className="public-brand-copy">
               <span className="public-brand-name">Naari Art</span>
-              <span className="public-brand-tagline">Elegance of Art</span>
+              <span className="public-brand-tagline">Designer Studio</span>
             </div>
           </Link>
 
@@ -52,7 +52,7 @@ const PublicLayout = ({ children }) => {
               Collaborate
             </NavLink>
             <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Atelier & Contact
+              Studio & Contact
             </NavLink>
           </nav>
 
@@ -80,10 +80,10 @@ const PublicLayout = ({ children }) => {
             <div className="public-mobile-drawer-content" onClick={(e) => e.stopPropagation()}>
               <div className="public-mobile-drawer-header">
                 <div className="public-brand">
-                  <img src={logoImg} alt="Naari Art" className="public-brand-logo" />
+                  <img src={logoImg} alt="Naari Art - Designer Studio" className="public-brand-logo" />
                   <div className="public-brand-copy">
                     <span className="public-brand-name">Naari Art</span>
-                    <span className="public-brand-tagline">Elegance of Art</span>
+                    <span className="public-brand-tagline">Designer Studio</span>
                   </div>
                 </div>
                 <button type="button" className="public-drawer-close" onClick={closeMobileNav} aria-label="Close menu">
@@ -105,13 +105,13 @@ const PublicLayout = ({ children }) => {
                   ★ Creator Collaboration
                 </NavLink>
                 <NavLink to="/contact" onClick={closeMobileNav}>
-                  Atelier & Contact
+                  Studio & Contact
                 </NavLink>
               </div>
 
               <div className="public-mobile-footer" style={{ marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid var(--pub-border)' }}>
                 <Link className="public-button primary" to="/contact" onClick={closeMobileNav} style={{ width: '100%', justifyContent: 'center', marginBottom: '10px' }}>
-                  Book Atelier Appointment <FiArrowRight />
+                  Book Studio Appointment <FiArrowRight />
                 </Link>
                 <a
                   href="https://api.whatsapp.com/send?phone=919825123456&text=Hello%20Naari%20Art,%20I%20would%20like%20to%20inquire%20about%20couture%20stitching."
@@ -139,10 +139,10 @@ const PublicLayout = ({ children }) => {
         <div className="public-footer-inner">
           <div className="public-footer-col brand-col">
             <div className="public-footer-brand">
-              <img src={logoImg} alt="Naari Art" className="footer-logo" />
+              <img src={logoImg} alt="Naari Art - Designer Studio" className="footer-logo" />
               <div>
                 <h3>Naari Art</h3>
-                <p className="footer-sub">Elegance of Art</p>
+                <p className="footer-sub">Designer Studio</p>
               </div>
             </div>
             <p className="footer-about">
@@ -165,7 +165,7 @@ const PublicLayout = ({ children }) => {
           </div>
 
           <div className="public-footer-col">
-            <h4 className="footer-title">Atelier Services</h4>
+            <h4 className="footer-title">Studio Services</h4>
             <ul className="footer-links">
               <li><span>Custom Bridal Lehengas</span></li>
               <li><span>Artisanal Hand Embroidery</span></li>
@@ -196,7 +196,7 @@ const PublicLayout = ({ children }) => {
         </div>
 
         <div className="public-footer-bottom">
-          <p>© {new Date().getFullYear()} Naari Art. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} Naari Art - Designer Studio. All Rights Reserved.</p>
           <p className="footer-credit">
             Crafted with passion in Surat • Elegance of Art
           </p>
