@@ -4,7 +4,10 @@ import Sidebar from './Sidebar';
 import '../styles.css';
 import { storage } from '../utils/storage';
 import { reportsAPI } from '../services/api';
-import { FiEye } from 'react-icons/fi';
+import { FiEye, FiDownload, FiFileText } from 'react-icons/fi';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const Reports = ({ onLogout }) => {
     const navigate = useNavigate();
@@ -201,6 +204,164 @@ const Reports = ({ onLogout }) => {
         setShowModal(true);
     };
 
+    
+    const handleDownloadExcel = () => {
+        if (!reportData) return;
+        let rows = [];
+
+        if (activeTab === 'delivery') {
+            rows = [{
+                'Total On Time Deliveries': reportData.totalOnTimeDeliveries || 0,
+                'Total Delayed Deliveries': reportData.totalDelayedDeliveries || 0,
+                'On Time %': (reportData.onTimeDeliveryPercentage || 0) + '%',
+                'Delayed %': (reportData.delayedDeliveryPercentage || 0) + '%',
+            }];
+        } else if (Array.isArray(reportData)) {
+            rows = reportData.map((item) => {
+                if (activeTab === 'fabric') {
+                    return {
+                        'Fabric Name': item.fabricName || '-',
+                        'Orders': item.noOfOrders || 0,
+                        'Revenue (₹)': item.totalRevenue || 0,
+                        'Customers': item.noOfCustomers || 0,
+                        'Average Revenue (₹)': item.avgRevenue || 0,
+                    };
+                }
+                if (activeTab === 'outfit') {
+                    return {
+                        'Outfit Name': item.outfitName || '-',
+                        'Orders': item.noOfOrders || 0,
+                        'Revenue (₹)': item.totalRevenue || 0,
+                        'Customers': item.noOfCustomers || 0,
+                        'Average Revenue (₹)': item.avgRevenue || 0,
+                        'Average Time': item.avgOutfitTime || '-',
+                        'Repair Rate': (item.repairPercentage || 0) + '%',
+                        'Cancellation Rate': (item.cancelPercentage || 0) + '%',
+                    };
+                }
+                if (activeTab === 'worktype') {
+                    return {
+                        'Work Type': item.workTypeName || '-',
+                        'Orders': item.noOfOrders || 0,
+                        'Customers': item.noOfCustomers || 0,
+                        'Avg Work Time': item.avgWorkTime || '-',
+                    };
+                }
+                if (activeTab === 'worker') {
+                    return {
+                        'Worker Name': item.workerName || '-',
+                        'Assigned Orders': item.noOfOrders || 0,
+                        'Avg Complete Time': item.avgCompleteTime || '-',
+                        'Repair Rate': (item.repairPercentage || 0) + '%',
+                    };
+                }
+                if (activeTab === 'customer') {
+                    return {
+                        'Customer Name': item.customerName || '-',
+                        'Orders': item.noOfOrders || 0,
+                        'Total Revenue (₹)': item.totalRevenue || 0,
+                        'Due Amount (₹)': item.dueAmount || 0,
+                        'Avg Revenue / Order (₹)': item.avgRevenue || 0,
+                        'Repair Rate': (item.repairPercentage || 0) + '%',
+                        'Cancellation Rate': (item.cancelPercentage || 0) + '%',
+                    };
+                }
+                return item;
+            });
+        }
+
+        if (rows.length === 0) {
+            alert('No report data available to export for the selected date range.');
+            return;
+        }
+
+        const ws = XLSX.utils.json_to_sheet(rows);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, activeTab.toUpperCase() + '_Report');
+        XLSX.writeFile(wb, 'NaariArt_' + activeTab + '_Report_' + startDate + '_to_' + endDate + '.xlsx');
+    };
+
+    const handleDownloadPDF = () => {
+        if (!reportData) return;
+        const doc = new jsPDF('l', 'mm', 'a4');
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(16);
+        doc.setTextColor(184, 79, 42);
+        doc.text('Naari Art - Designer Studio', 14, 16);
+
+        doc.setFontSize(12);
+        doc.setTextColor(30, 41, 59);
+        doc.text(activeTab.toUpperCase() + ' ANALYTICS & PRODUCTION REPORT', 14, 23);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(9);
+        doc.setTextColor(100, 116, 139);
+        doc.text('Report Period: ' + startDate + ' to ' + endDate + ' | Generated on: ' + new Date().toLocaleDateString('en-GB'), 14, 29);
+
+        let headers = [];
+        let body = [];
+
+        if (activeTab === 'fabric') {
+            headers = ['Fabric Name', 'Orders', 'Revenue', 'Customers', 'Avg Revenue'];
+            body = (Array.isArray(reportData) ? reportData : []).map(i => [
+                i.fabricName, i.noOfOrders, '₹ ' + i.totalRevenue, i.noOfCustomers, '₹ ' + i.avgRevenue
+            ]);
+        } else if (activeTab === 'outfit') {
+            headers = ['Outfit Name', 'Orders', 'Revenue', 'Customers', 'Avg Rev', 'Avg Time', 'Repair %', 'Cancel %'];
+            body = (Array.isArray(reportData) ? reportData : []).map(i => [
+                i.outfitName, i.noOfOrders, '₹ ' + i.totalRevenue, i.noOfCustomers, '₹ ' + i.avgRevenue, i.avgOutfitTime, (i.repairPercentage || 0) + '%', (i.cancelPercentage || 0) + '%'
+            ]);
+        } else if (activeTab === 'worktype') {
+            headers = ['Work Type', 'Orders', 'Customers', 'Avg Work Time'];
+            body = (Array.isArray(reportData) ? reportData : []).map(i => [
+                i.workTypeName, i.noOfOrders, i.noOfCustomers, i.avgWorkTime
+            ]);
+        } else if (activeTab === 'worker') {
+            headers = ['Worker Name', 'Assigned Orders', 'Avg Complete Time', 'Repair %'];
+            body = (Array.isArray(reportData) ? reportData : []).map(i => [
+                i.workerName, i.noOfOrders, i.avgCompleteTime, (i.repairPercentage || 0) + '%'
+            ]);
+        } else if (activeTab === 'customer') {
+            headers = ['Customer Name', 'Orders', 'Revenue', 'Due Amount', 'Avg Rev/Order', 'Repair %', 'Cancel %'];
+            body = (Array.isArray(reportData) ? reportData : []).map(i => [
+                i.customerName, i.noOfOrders, '₹ ' + i.totalRevenue, '₹ ' + i.dueAmount, '₹ ' + i.avgRevenue, (i.repairPercentage || 0) + '%', (i.cancelPercentage || 0) + '%'
+            ]);
+        } else if (activeTab === 'delivery') {
+            headers = ['Total On-Time Deliveries', 'Total Delayed Deliveries', 'On-Time %', 'Delayed %'];
+            body = [[
+                reportData.totalOnTimeDeliveries || 0,
+                reportData.totalDelayedDeliveries || 0,
+                (reportData.onTimeDeliveryPercentage || 0) + '%',
+                (reportData.delayedDeliveryPercentage || 0) + '%'
+            ]];
+        }
+
+        if (body.length === 0) {
+            alert('No report data available to export for the selected date range.');
+            return;
+        }
+
+        doc.autoTable({
+            startY: 34,
+            head: [headers],
+            body: body,
+            theme: 'striped',
+            headStyles: {
+                fillColor: [184, 79, 42],
+                textColor: [255, 255, 255],
+                fontStyle: 'bold',
+                fontSize: 9,
+            },
+            styles: {
+                fontSize: 8.5,
+                cellPadding: 3,
+            },
+        });
+
+        doc.save('NaariArt_' + activeTab + '_Report_' + startDate + '_to_' + endDate + '.pdf');
+    };
+
     const closeModal = () => {
         setSelectedRecord(null);
         setShowModal(false);
@@ -236,25 +397,47 @@ const Reports = ({ onLogout }) => {
                     )}
 
                     <div className="mm-table-card" style={{ padding: '24px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                        <label style={{ fontWeight: '600', color: 'var(--text-color)' }}>
-                            Start Date
-                            <input
-                                type="date"
-                                value={startDate}
-                                onChange={(e) => setStartDate(e.target.value)}
-                                style={{ marginLeft: '8px', padding: '8px 10px', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                            />
-                        </label>
-                        <label style={{ fontWeight: '600', color: 'var(--text-color)' }}>
-                            End Date
-                            <input
-                                type="date"
-                                value={endDate}
-                                onChange={(e) => setEndDate(e.target.value)}
-                                style={{ marginLeft: '8px', padding: '8px 10px', borderRadius: '8px', border: '1px solid var(--border-color)' }}
-                            />
-                        </label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px', marginBottom: '20px', flexWrap: 'wrap', background: '#FFFFFF', padding: '16px 20px', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
+                        <div style={{ display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <label style={{ fontWeight: '600', color: '#1E293B', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                                Start Date:
+                                <input
+                                    type="date"
+                                    value={startDate}
+                                    onChange={(e) => setStartDate(e.target.value)}
+                                    style={{ padding: '7px 12px', borderRadius: '8px', border: '1px solid #CBD5E1', fontSize: '13px' }}
+                                />
+                            </label>
+                            <label style={{ fontWeight: '600', color: '#1E293B', fontSize: '13px', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                                End Date:
+                                <input
+                                    type="date"
+                                    value={endDate}
+                                    onChange={(e) => setEndDate(e.target.value)}
+                                    style={{ padding: '7px 12px', borderRadius: '8px', border: '1px solid #CBD5E1', fontSize: '13px' }}
+                                />
+                            </label>
+                        </div>
+                        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <button
+                                type="button"
+                                onClick={handleDownloadExcel}
+                                className="mm-btn-primary"
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', padding: '8px 16px', borderRadius: '8px' }}
+                                title="Download active report as Excel (.xlsx)"
+                            >
+                                <FiDownload size={15} /> Download Excel (.xlsx)
+                            </button>
+                            <button
+                                type="button"
+                                onClick={handleDownloadPDF}
+                                className="mm-btn-secondary"
+                                style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '13px', padding: '8px 16px', borderRadius: '8px' }}
+                                title="Download active report as PDF"
+                            >
+                                <FiFileText size={15} /> Download PDF
+                            </button>
+                        </div>
                     </div>
 
                     {/* Tabs */}

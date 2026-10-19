@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar.js';
 import '../styles.css';
 import { storage } from '../utils/storage';
-import { orderAPI, bankDetailsAPI, legalAPI } from "../services/api";
+import { orderAPI, bankDetailsAPI, legalAPI, customerAPI } from "../services/api";
 import { FiPlus, FiSearch, FiEdit2, FiTrash2, FiEye, FiPackage, FiDownload, FiPrinter } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import Pagination from './Pagination.js';
@@ -32,6 +32,7 @@ const Order = ({ onLogout }) => {
 
   const [bankList, setBankList] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [customerLookupMap, setCustomerLookupMap] = useState({});
 
   const printRef = useRef(null);
 
@@ -68,6 +69,18 @@ const Order = ({ onLogout }) => {
   useEffect(() => {
     fetchOrders();
     fetchBanks();
+    customerAPI.getCustomers('').then(res => {
+      const data = res?.Data || res || [];
+      if (Array.isArray(data)) {
+        const map = {};
+        data.forEach(c => {
+          if (c._id) map[c._id] = c;
+          if (c.id) map[c.id] = c;
+        });
+        setCustomerLookupMap(map);
+        try { localStorage.setItem('naari_customers', JSON.stringify(data)); } catch {}
+      }
+    }).catch(() => {});
   }, []);
 
 
@@ -701,7 +714,13 @@ const Order = ({ onLogout }) => {
                                 <button
                                   className="mm-table-action-btn mm-whatsapp-btn"
                                   title="Send Tax Invoice via WhatsApp"
-                                  onClick={() => sendOrderInvoiceViaWhatsApp(order)}
+                                  onClick={() => {
+                                  let orderWithCust = { ...order };
+                                  if (typeof order.customerId === 'string' && customerLookupMap[order.customerId]) {
+                                    orderWithCust.customerId = customerLookupMap[order.customerId];
+                                  }
+                                  sendOrderInvoiceViaWhatsApp(orderWithCust);
+                                }}
                                   style={{ color: '#25D366' }}
                                 >
                                   <FaWhatsapp size={15} />

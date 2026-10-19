@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 jest.mock('react-router-dom', () => {
@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => {
     },
     useNavigate: () => jest.fn(),
     useLocation: () => ({ pathname: '/', search: '' }),
-    useParams: () => ({}),
+    useParams: () => ({ customerId: 'cust-1' }),
     useSearchParams: () => [new URLSearchParams(), jest.fn()],
   };
 });
@@ -52,6 +52,7 @@ jest.mock('jspdf', () => {
     text: jest.fn(),
     setFontSize: jest.fn(),
     setTextColor: jest.fn(),
+    autoTable: jest.fn(),
     internal: { pageSize: { width: 210, height: 297 } },
   }));
 });
@@ -60,7 +61,8 @@ jest.mock('jspdf-autotable', () => jest.fn());
 import App from './App';
 import Sidebar from './components/Sidebar';
 import Collaborators from './components/Collaborators';
-import { sendCollaboratorWhatsApp } from './utils/whatsapp';
+import Reports from './components/Reports';
+import { sendCollaboratorWhatsApp, sendOrderInvoiceViaWhatsApp } from './utils/whatsapp';
 
 test('renders the application shell and public pages', () => {
   render(<App />);
@@ -91,5 +93,30 @@ test('WhatsApp messages use strict brand name Naari Art - Designer Studio', () =
   const sentText = decodeURIComponent(openSpy.mock.calls[0][0]);
   expect(sentText).toContain('Naari Art - Designer Studio');
   expect(sentText).not.toContain('Naari Art Atelier');
+  openSpy.mockRestore();
+});
+
+test('Reports page provides Download Excel and Download PDF buttons', () => {
+  const { container } = render(<Reports onLogout={jest.fn()} />);
+  expect(container.textContent).toContain('Download Excel (.xlsx)');
+  expect(container.textContent).toContain('Download PDF');
+});
+
+test('sendOrderInvoiceViaWhatsApp formats message with studio invoice details', () => {
+  const openSpy = jest.spyOn(window, 'open').mockImplementation(() => {});
+  sendOrderInvoiceViaWhatsApp(
+    {
+      orderId: 'N0007',
+      totalPrice: 20000,
+      advanceAmount: 5000,
+      productName: 'Designer Kurti',
+    },
+    '9825123456'
+  );
+  expect(openSpy).toHaveBeenCalled();
+  const sentText = decodeURIComponent(openSpy.mock.calls[0][0]);
+  expect(sentText).toContain('N0007');
+  expect(sentText).toContain('Designer Kurti');
+  expect(sentText).toContain('Naari Art - Designer Studio');
   openSpy.mockRestore();
 });
