@@ -197,6 +197,7 @@ const AddEditCustomer = ({ onLogout }) => {
       navigate('/customers');
     } catch (err) {
       setError((err?.response?.data?.Message || err?.message) || 'Failed to save customer');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       console.error(err);
     } finally {
       setSaving(false);

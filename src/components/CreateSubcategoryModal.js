@@ -43,7 +43,7 @@ const CreateSubcategoryModal = ({ isOpen, onClose, onSave, outfitTypeId }) => {
   }
 
   return (
-    <div className="modal-overlay" onClick={handleOverlayClick}>
+    <div className="modal-overlay" style={{ zIndex: 1100 }} onClick={handleOverlayClick}>
       <div className="modal small">
         <div className="modal-header simple">
           <h2 className="modal-title">Create Subcategory</h2>

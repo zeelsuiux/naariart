@@ -271,12 +271,20 @@
 /* Mobile Drawer */
 .public-mobile-drawer {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   background: rgba(30, 27, 24, 0.6);
   backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
   justify-content: flex-end;
+  touch-action: none;
 }
 
 .public-mobile-drawer-content {

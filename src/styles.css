@@ -9806,6 +9806,7 @@ button.tab.active {
   text-transform: uppercase !important;
   letter-spacing: 0.5px !important;
   border-bottom: 1px solid var(--border-color, #E2E8F0) !important;
+  white-space: nowrap !important;
 }
 
 .mm-table td,
