@@ -97,17 +97,21 @@ const Invoice = ({ onLogout }) => {
     const handleDownload = (data) => {
         const doc = new jsPDF("p", "mm", "a4");
 
-        const order = data.orderId;
-        const customer = order.customerId;
+        const order = (typeof data?.orderId === 'object' && data.orderId !== null) ? data.orderId : {};
+        const customer = (typeof order.customerId === 'object' && order.customerId !== null) ? order.customerId : {};
 
-        const total = order.sellingPrice;
-        const advance = order.advanceAmount;
-        const gstpercentage = data.percentage;
-        const subTotal = total / (1 + gstpercentage / 100);
+        const total = Number(order.sellingPrice || order.totalPrice || data.amount || 0);
+        const advance = Number(order.advanceAmount || order.advancePayment || 0);
+        const gstpercentage = Number(data.percentage || 0);
+        const subTotal = gstpercentage > 0 ? total / (1 + gstpercentage / 100) : total;
         const gst = total - subTotal;
-        const netDue = total - advance;
+        const netDue = Math.max(0, total - advance);
 
         const primary = getThemeRgb();
+        const custName = String(customer?.fullName || customer?.name || 'Valued Client').toUpperCase();
+        const custMobile = String(customer?.mobile || customer?.mobileNumber || customer?.phone || '-');
+        const orderIdDisplay = typeof data.orderId === 'object' ? (data.orderId?.orderId || data.orderId?._id || '-') : String(data.orderId || '-');
+        const deliveryDisplay = order.deliveryDate ? new Date(order.deliveryDate).toLocaleDateString() : 'As scheduled';
 
         // ======================
         // Header
@@ -140,14 +144,14 @@ const Invoice = ({ onLogout }) => {
         doc.setFontSize(10);
         doc.setTextColor(0);
 
-        doc.text(`Invoice No : ${data.legalid}`, 150, 28);
-        doc.text(`Order ID : ${data.orderId.orderId}`, 150, 34);
+        doc.text(`Invoice No : ${data.legalid || 'INV-001'}`, 150, 28);
+        doc.text(`Order ID : ${orderIdDisplay}`, 150, 34);
         doc.text(
-            `Date : ${new Date(data.createdAt).toLocaleDateString()}`,
+            `Date : ${new Date(data.createdAt || Date.now()).toLocaleDateString()}`,
             150,
             40
         );
-        doc.text(`Delivery : ${order.deliveryDate}`, 150, 46);
+        doc.text(`Delivery : ${deliveryDisplay}`, 150, 46);
 
         doc.setDrawColor(...primary);
         doc.line(10, 58, 200, 58);
@@ -164,10 +168,10 @@ const Invoice = ({ onLogout }) => {
         doc.setTextColor(0);
 
         doc.setFont("helvetica", "bold");
-        doc.text(customer.fullName.toUpperCase(), 10, 84);
+        doc.text(custName, 10, 84);
 
         doc.setFont("helvetica", "normal");
-        doc.text(customer.mobile, 10, 90);
+        doc.text(custMobile, 10, 90);
 
         // ======================
         // Item Table

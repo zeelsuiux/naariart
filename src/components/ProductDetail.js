@@ -122,7 +122,7 @@ const ProductDetail = () => {
                 </Link>
                 <a
                   className="public-button secondary"
-                  href={`https://wa.me/919825000000?text=${encodeURIComponent(`Hello Naari Art, I am interested in inquiring about ${product.name || product.outfitTypeName || 'this design'}.`)}`}
+                  href={`https://wa.me/919825123456?text=${encodeURIComponent(`Hello Naari Art, I am interested in inquiring about ${product.name || product.outfitTypeName || 'this design'}.`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

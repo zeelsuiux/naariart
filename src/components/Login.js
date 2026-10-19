@@ -19,58 +19,66 @@ const Login = ({ onLogin }) => {
     }
   }, [navigate]);
 
+  const handleDemoLogin = () => {
+    const defaultAdmin = {
+      fullName: 'Master Admin',
+      userName: 'admin@naariart.com',
+      type: 'admin',
+      roleid: {
+        name: 'Master Admin',
+        ismaster: true,
+        permissions: [
+          { collectionName: 'customer', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'customers', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'order', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'orders', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'lead', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'leads', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'product', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'products', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'task', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'tasks', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'staff', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'settings', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'reports', view: true, insertUpdate: true, delete: true },
+          { collectionName: 'finance', view: true, insertUpdate: true, delete: true }
+        ]
+      }
+    };
+    storage.setAuthData('demo-preview-token', defaultAdmin);
+    onLogin();
+    navigate('/dashboard');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
+      // Allow demo credentials to enter directly
+      if (
+        (email.trim().toLowerCase() === 'admin@naariart.com' || email.trim().toLowerCase() === 'admin') &&
+        password.trim() === 'admin123'
+      ) {
+        handleDemoLogin();
+        return;
+      }
+
       // Call login API
-      const response = await authAPI.login(email, password);
+      const response = await authAPI.login(email.trim(), password);
       
-      // Save auth data to localStorage
-      storage.setAuthData(response.token, response.user);
-      
-      // Show success message (optional)
-      console.log(response.message || 'Login successful');
-      
-      // Call parent onLogin callback
-      onLogin();
-      
-      // Redirect to dashboard page
-      navigate('/dashboard');
-      
+      if (response && response.token) {
+        storage.setAuthData(response.token, response.user);
+        onLogin();
+        navigate('/dashboard');
+      } else {
+        setError(response?.message || 'Invalid email or password.');
+      }
     } catch (err) {
-      console.log('Login API offline or credentials error, activating preview session:', err);
-      // Fallback preview session so client or user testing always gets to dashboard
-      const defaultAdmin = {
-        fullName: 'Master Admin',
-        userName: email || 'admin',
-        type: 'admin',
-        roleid: {
-          name: 'Master Admin',
-          ismaster: true,
-          permissions: [
-            { collectionName: 'customer', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'customers', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'order', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'orders', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'lead', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'leads', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'product', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'products', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'task', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'tasks', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'staff', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'settings', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'reports', view: true, insertUpdate: true, delete: true },
-            { collectionName: 'finance', view: true, insertUpdate: true, delete: true }
-          ]
-        }
-      };
-      storage.setAuthData('demo-preview-token', defaultAdmin);
-      onLogin();
-      navigate('/dashboard');
+      console.error('Login error:', err);
+      const apiMessage = err?.response?.data?.Message || err?.response?.data?.message || err?.message;
+      setError(apiMessage || 'Invalid email or password. Please verify credentials or use One-Click Demo.');
     } finally {
       setLoading(false);
     }
@@ -156,8 +164,19 @@ const Login = ({ onLogin }) => {
           <button type="submit" className="login-button" disabled={loading}>
             {loading ? 'Signing In...' : 'Sign In'}
           </button>
-        <p style={{textAlign: 'center'}}>
-          <Link to="/" style={{color: 'var(--primary-color)', textDecoration: 'none'}}>Back To Main</Link>
+
+          <button
+            type="button"
+            className="mm-btn-secondary"
+            onClick={handleDemoLogin}
+            disabled={loading}
+            style={{ width: '100%', marginTop: '10px', height: '42px', fontSize: '13.5px', justifyContent: 'center' }}
+          >
+            Explore Demo Studio ERP (One-Click)
+          </button>
+
+        <p style={{textAlign: 'center', marginTop: '16px'}}>
+          <Link to="/" style={{color: 'var(--primary-color)', textDecoration: 'none'}}>← Back to Visitor Atelier</Link>
         </p>
         </form>
       </div>

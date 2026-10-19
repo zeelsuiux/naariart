@@ -59,7 +59,7 @@ const Order = ({ onLogout }) => {
       setOrders(ordersData); // Initially display all orders
     } catch (err) {
       console.error('Error fetching orders:', err);
-      setError(err.response.data.Message || 'Failed to fetch orders');
+      setError((err?.response?.data?.Message || err?.message) || 'Failed to fetch orders');
     } finally {
       setLoading(false);
     }
@@ -290,80 +290,15 @@ const Order = ({ onLogout }) => {
     (item) => item.collectionName === "orders" || item.collectionName === "order"
   );
 
-  const canAddEdit = isAdmin || orderPermission?.insertUpdate || true;
-  // const canView = isAdmin || orderPermission?.view || true;
-  const canDelete = isAdmin || orderPermission?.delete || true;
-
-  // console.log(orderPermission)
+  const canAddEdit = isAdmin || Boolean(orderPermission?.insertUpdate);
+  const canDelete = isAdmin || Boolean(orderPermission?.delete);
 
   // sorting function
   const handleSort = (key) => {
-    let direction = "asc";
-
-    if (
-      sortConfig.key === key &&
-      sortConfig.direction === "asc"
-    ) {
-      direction = "desc";
-    }
-
-    setSortConfig({ key, direction });
-
-    const sortedOrders = [...orders].sort((a, b) => {
-      let valueA;
-      let valueB;
-
-      switch (key) {
-        case "orderId":
-          valueA = a.orderId || "";
-          valueB = b.orderId || "";
-          break;
-
-        case "customer":
-          valueA =
-            typeof a.customerId === "object"
-              ? a.customerId?.fullName || ""
-              : a.customerId || "";
-          valueB =
-            typeof b.customerId === "object"
-              ? b.customerId?.fullName || ""
-              : b.customerId || "";
-          break;
-
-        case "orderType":
-          valueA = a.orderType || "";
-          valueB = b.orderType || "";
-          break;
-
-        case "status":
-          valueA = a.status || "";
-          valueB = b.status || "";
-          break;
-
-        case "createdAt":
-          valueA = new Date(a.createdAt || 0);
-          valueB = new Date(b.createdAt || 0);
-          break;
-
-        case "deliveryDate":
-          valueA = new Date(a.deliveryDate || 0);
-          valueB = new Date(b.deliveryDate || 0);
-          break;
-
-        default:
-          return 0;
-      }
-
-      if (valueA < valueB) {
-        return direction === "asc" ? -1 : 1;
-      }
-      if (valueA > valueB) {
-        return direction === "asc" ? 1 : -1;
-      }
-      return 0;
+    setSortConfig((prev) => {
+      const direction = prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc';
+      return { key, direction };
     });
-
-    setOrders(sortedOrders);
   };
 
   const getSortIcon = (key) => {
@@ -376,7 +311,57 @@ const Order = ({ onLogout }) => {
 
     if (sortConfig.key) {
       sortableOrders.sort((a, b) => {
-        // sorting logic
+        let valueA = '';
+        let valueB = '';
+
+        switch (sortConfig.key) {
+          case 'orderId':
+            valueA = a.orderId || '';
+            valueB = b.orderId || '';
+            break;
+
+          case 'customer':
+            valueA =
+              typeof a.customerId === 'object'
+                ? a.customerId?.fullName || ''
+                : a.customerId || '';
+            valueB =
+              typeof b.customerId === 'object'
+                ? b.customerId?.fullName || ''
+                : b.customerId || '';
+            break;
+
+          case 'orderType':
+            valueA = a.orderType || '';
+            valueB = b.orderType || '';
+            break;
+
+          case 'status':
+            valueA = a.status || '';
+            valueB = b.status || '';
+            break;
+
+          case 'createdAt':
+            valueA = new Date(a.createdAt || 0).getTime();
+            valueB = new Date(b.createdAt || 0).getTime();
+            break;
+
+          case 'deliveryDate':
+            valueA = new Date(a.deliveryDate || 0).getTime();
+            valueB = new Date(b.deliveryDate || 0).getTime();
+            break;
+
+          default:
+            return 0;
+        }
+
+        if (valueA < valueB) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (valueA > valueB) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
       });
     }
 
@@ -425,7 +410,7 @@ const Order = ({ onLogout }) => {
       fetchOrders(); // Refresh orders after deletion
     } catch (err) {
       console.error('Error deleting order:', err);
-      alert(err.response.data.Message || 'Failed to delete order');
+      alert((err?.response?.data?.Message || err?.message) || 'Failed to delete order');
     } finally {
       setLoading(false);
     }

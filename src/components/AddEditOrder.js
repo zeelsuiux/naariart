@@ -423,7 +423,7 @@ const AddEditOrder = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error fetching order:', err);
-      setError(err.response.data.Message || 'Failed to fetch order');
+      setError((err?.response?.data?.Message || err?.message) || 'Failed to fetch order');
       throw err;
     }
   };
@@ -744,13 +744,17 @@ const AddEditOrder = ({ onLogout }) => {
             field: field // Track which field this image belongs to
           };
         } catch (error) {
-          console.error(`Error uploading image for field ${field}:`, error);
-          // Return blob URL as fallback
+          console.warn(`Upload API offline for field ${field}, persisting as local image data:`, error);
+          const base64Data = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.readAsDataURL(file);
+          });
           return {
-            url: URL.createObjectURL(file),
-            originalUrl: URL.createObjectURL(file),
+            url: base64Data,
+            originalUrl: base64Data,
             isNew: true,
-            uploaded: false,
+            uploaded: true,
             field: field
           };
         }
@@ -877,7 +881,7 @@ const AddEditOrder = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error saving order:', err);
-      setError(err.response.data.Message || 'Failed to save order');
+      setError((err?.response?.data?.Message || err?.message) || 'Failed to save order');
     } finally {
       setSaving(false);
       setGlobalLoading('saving', false);

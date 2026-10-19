@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, useParams, Link } from 'react-router-dom';
 import { FiDownload, FiPrinter, FiArrowLeft, FiCheckCircle } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import jsPDF from 'jspdf';
@@ -11,8 +11,9 @@ import { openWhatsApp } from '../utils/whatsapp';
 import '../styles.css';
 
 const InvoiceView = () => {
+  const { orderId } = useParams();
   const [searchParams] = useSearchParams();
-  const orderIdParam = searchParams.get('orderId') || '';
+  const targetId = (orderId || searchParams.get('orderId') || '').trim();
   const [order, setOrder] = useState(null);
   const [bank, setBank] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,9 +21,17 @@ const InvoiceView = () => {
   useEffect(() => {
     // Look up order in demoStore or local storage
     const allOrders = getLocalStore('orders', INITIAL_ORDERS);
-    const found = allOrders.find(
-      (o) => o._id === orderIdParam || o.orderId === orderIdParam
-    ) || allOrders[0];
+    let found = null;
+    if (targetId) {
+      found = allOrders.find(
+        (o) =>
+          String(o._id || '').toLowerCase() === targetId.toLowerCase() ||
+          String(o.orderId || '').toLowerCase() === targetId.toLowerCase()
+      );
+    }
+    if (!found) {
+      found = allOrders[0];
+    }
 
     const banks = getLocalStore('banks', INITIAL_BANK_DETAILS);
     const defaultBank = banks.find((b) => b.isDefault) || banks[0];
@@ -30,7 +39,7 @@ const InvoiceView = () => {
     setOrder(found);
     setBank(defaultBank);
     setLoading(false);
-  }, [orderIdParam]);
+  }, [targetId]);
 
   const customer = order?.customerId || {};
   const customerName = customer?.fullName || customer?.name || 'Valued Client';

@@ -40,8 +40,7 @@ const Team = ({ onLogout }) => {
 
       setStaff(staffList);
     } catch (err) {
-      // console.error('Error fetching staff:', err);
-      setStaffError(err.response.data.Message || 'Failed to fetch staff');
+      setStaffError(err?.response?.data?.Message || err?.message || 'Failed to fetch staff');
     } finally {
       setStaffLoading(false);
     }
@@ -57,19 +56,19 @@ const Team = ({ onLogout }) => {
       await fetchStaff();
       return savedStaff;
     } catch (err) {
-      // console.error('Error saving staff:', err);
       throw err;
     }
   };
 
-  const deleteStaff = async (staffId) => {
+  const deleteStaff = async (staffId, staffName = 'this staff member') => {
+    if (!staffId) return;
+    if (!window.confirm(`Are you sure you want to remove ${staffName}?`)) return;
     try {
       const deletedStaff = await staffAPI.deleteStaff(staffId);
       await fetchStaff();
       return deletedStaff;
     } catch (err) {
-      // console.error('Error deleting staff:', err);
-      throw err;
+      setStaffError(err?.response?.data?.Message || err?.message || 'Failed to delete staff');
     }
   };
 
@@ -184,7 +183,7 @@ const Team = ({ onLogout }) => {
                           <button
                             className="mm-table-action-btn"
                             style={{ color: '#DC2626' }}
-                            onClick={() => deleteStaff(staffMember._id)}
+                            onClick={() => deleteStaff(staffMember._id, staffMember.name || staffMember.fullName)}
                             title="Delete Staff"
                           >
                             <FiX size={14} />

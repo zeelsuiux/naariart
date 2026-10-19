@@ -53,11 +53,18 @@ const Dashboard = ({ onLogout }) => {
   };
 
   // Today reference memoized
-  const today = useMemo(() => {
+  const startOfToday = useMemo(() => {
+    const t = new Date();
+    t.setHours(0, 0, 0, 0);
+    return t;
+  }, []);
+
+  const endOfToday = useMemo(() => {
     const t = new Date();
     t.setHours(23, 59, 59, 999);
     return t;
   }, []);
+
   const todayStr = useMemo(() => new Date().toISOString().split('T')[0], []);
 
   // 1. Today's Orders
@@ -65,29 +72,30 @@ const Dashboard = ({ onLogout }) => {
     return orders.filter((item) => item.createdAt?.slice(0, 10) === todayStr);
   }, [orders, todayStr]);
 
-  // 2. Deliveries Pending
+  // 2. Deliveries Due Today
   const deliveries = useMemo(() => {
     return orders.filter((item) => {
       if (!item.deliveryDate) return false;
       const deliveryDate = new Date(item.deliveryDate);
       return (
-        deliveryDate <= today &&
+        deliveryDate >= startOfToday &&
+        deliveryDate <= endOfToday &&
         !['completed', 'delivered', 'cancelled'].includes(item.status?.toLowerCase())
       );
     });
-  }, [orders, today]);
+  }, [orders, startOfToday, endOfToday]);
 
-  // 3. Overdue Deliveries
+  // 3. Overdue Deliveries (Strictly Before Today)
   const overdue = useMemo(() => {
     return orders.filter((item) => {
       if (!item.deliveryDate) return false;
       const deliveryDate = new Date(item.deliveryDate);
       return (
-        deliveryDate < today &&
+        deliveryDate < startOfToday &&
         !['completed', 'delivered', 'cancelled'].includes(item.status?.toLowerCase())
       );
     });
-  }, [orders, today]);
+  }, [orders, startOfToday]);
 
   // 4. Upcoming Deliveries (Next 7 Days)
   const upcomingOrders = useMemo(() => {
@@ -99,12 +107,12 @@ const Dashboard = ({ onLogout }) => {
       if (!item.deliveryDate) return false;
       const deliveryDate = new Date(item.deliveryDate);
       return (
-        deliveryDate >= today &&
+        deliveryDate > endOfToday &&
         deliveryDate <= next7Days &&
         !['completed', 'delivered', 'cancelled'].includes(item.status?.toLowerCase())
       );
     });
-  }, [orders, today]);
+  }, [orders, endOfToday]);
 
   // Filter current active dataset
   const activeOrdersList = useMemo(() => {

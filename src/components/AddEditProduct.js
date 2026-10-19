@@ -366,7 +366,7 @@ const AddEditProduct = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error fetching product:', err);
-      setError(err.response.data.Message || 'Failed to fetch product');
+      setError((err?.response?.data?.Message || err?.message) || 'Failed to fetch product');
     } finally {
       setLoading(false);
     }
@@ -756,7 +756,7 @@ const AddEditProduct = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error saving product:', err);
-      setError(err.response.data.Message || 'Failed to save product');
+      setError((err?.response?.data?.Message || err?.message) || 'Failed to save product');
     } finally {
       setSaving(false);
     }

@@ -12,9 +12,13 @@ const Reports = ({ onLogout }) => {
     const [activeTab, setActiveTab] = useState('fabric');
     const [reportData, setReportData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [startDate, setStartDate] = useState(() => new Date().toISOString().split('T')[0]);
+    const [startDate, setStartDate] = useState(() => {
+        const now = new Date();
+        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+        return firstDay.toISOString().split('T')[0];
+    });
     const [endDate, setEndDate] = useState(() => new Date().toISOString().split('T')[0]);
+    const [error, setError] = useState('');
 
     const fetchFabricAnalytics = async () => {
         try {

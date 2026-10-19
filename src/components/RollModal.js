@@ -73,7 +73,7 @@ const RollModal = ({ isOpen, onClose, onSave, editingRoll }) => {
       setPermissions(mergedPermissions);
     } catch (err) {
       console.error('Error merging permissions:', err);
-      setFetchError(err.response.data.Message || 'Failed to fetch permissions');
+      setFetchError((err?.response?.data?.Message || err?.message) || 'Failed to fetch permissions');
       // Fallback to role's existing permissions
       if (Array.isArray(rolePermissions)) {
         setPermissions(rolePermissions);
@@ -109,7 +109,7 @@ const RollModal = ({ isOpen, onClose, onSave, editingRoll }) => {
       }
     } catch (err) {
       console.error('Error fetching permissions:', err);
-      setFetchError(err.response.data.Message || 'Failed to fetch permissions');
+      setFetchError((err?.response?.data?.Message || err?.message) || 'Failed to fetch permissions');
       // Use default permissions on error
       setPermissions(defaultPermissions);
     } finally {

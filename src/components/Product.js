@@ -44,8 +44,9 @@ const Product = ({ onLogout }) => {
   const productPermission = permissions.find(
     (item) => item.collectionName === "products" || item.collectionName === "product"
   );
-  const canAddEdit = isAdmin || productPermission?.insertUpdate || true;
-  const canView = isAdmin || productPermission?.view || true;
+  const canAddEdit = isAdmin || Boolean(productPermission?.insertUpdate);
+  const canView = isAdmin || Boolean(productPermission?.view);
+  const canDelete = isAdmin || Boolean(productPermission?.delete);
 
   useEffect(() => {
     fetchProducts();
@@ -280,6 +281,16 @@ const Product = ({ onLogout }) => {
                           <FiEdit2 size={13} /> Edit
                         </button>
                       )}
+                      {canDelete && (
+                        <button
+                          className="mm-btn-ghost"
+                          onClick={() => handleDeleteProduct(product._id)}
+                          title="Delete Product"
+                          style={{ color: '#DC2626' }}
+                        >
+                          <FiTrash2 size={13} /> Delete
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -363,6 +374,16 @@ const Product = ({ onLogout }) => {
                                 title="Edit Product"
                               >
                                 <FiEdit2 size={14} />
+                              </button>
+                            )}
+                            {canDelete && (
+                              <button
+                                className="mm-table-action-btn"
+                                onClick={() => handleDeleteProduct(product._id)}
+                                title="Delete Product"
+                                style={{ color: '#DC2626' }}
+                              >
+                                <FiTrash2 size={14} />
                               </button>
                             )}
                           </div>

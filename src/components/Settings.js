@@ -91,7 +91,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error fetching outfit types:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to fetch outfit types');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to fetch outfit types');
     } finally {
       setOutfitTypesLoading(false);
     }
@@ -189,7 +189,7 @@ const Settings = ({ onLogout }) => {
       // console.log('Skills fetched:', skillsData);
     } catch (err) {
       console.error('Error fetching skills:', err);
-      setSkillsError(err.response.data.Message || 'Failed to fetch skills');
+      setSkillsError((err?.response?.data?.Message || err?.message) || 'Failed to fetch skills');
     } finally {
       setSkillsLoading(false);
     }
@@ -230,7 +230,7 @@ const Settings = ({ onLogout }) => {
       setWorkTypes(workTypesData || []);
     } catch (err) {
       console.error('Error fetching work types:', err);
-      setWorkTypesError(err.response.data.Message || 'Failed to fetch work types');
+      setWorkTypesError((err?.response?.data?.Message || err?.message) || 'Failed to fetch work types');
     } finally {
       setWorkTypesLoading(false);
     }
@@ -280,7 +280,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error fetching addons:', err);
-      setAddonsError(err.response.data.Message || 'Failed to fetch addons');
+      setAddonsError((err?.response?.data?.Message || err?.message) || 'Failed to fetch addons');
     } finally {
       setAddonsLoading(false);
     }
@@ -321,7 +321,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error saving addon:', err);
-      setAddonsError(err.response.data.Message || 'Failed to save addon');
+      setAddonsError((err?.response?.data?.Message || err?.message) || 'Failed to save addon');
     }
   };
 
@@ -385,7 +385,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error saving addon:', err);
-      setAddonsError(err.response.data.Message || 'Failed to save addon');
+      setAddonsError((err?.response?.data?.Message || err?.message) || 'Failed to save addon');
     }
   };
 
@@ -410,7 +410,7 @@ const Settings = ({ onLogout }) => {
       setNewOptionInput('');
     } catch (err) {
       console.error('Error adding option:', err);
-      setAddonsError(err.response.data.Message || 'Failed to add option');
+      setAddonsError((err?.response?.data?.Message || err?.message) || 'Failed to add option');
     }
   };
 
@@ -438,7 +438,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error removing option:', err);
-      setAddonsError(err.response.data.Message || 'Failed to remove option');
+      setAddonsError((err?.response?.data?.Message || err?.message) || 'Failed to remove option');
     }
   };
 
@@ -451,7 +451,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error deleting addon:', err);
-      setAddonsError(err.response.data.Message || 'Failed to delete addon');
+      setAddonsError((err?.response?.data?.Message || err?.message) || 'Failed to delete addon');
     }
   };
 
@@ -511,7 +511,7 @@ const Settings = ({ onLogout }) => {
       closeOutfitSelector();
     } catch (err) {
       console.error('Error updating addon outfits:', err);
-      setAddonsError(err.response.data.Message || 'Failed to update addon outfits');
+      setAddonsError((err?.response?.data?.Message || err?.message) || 'Failed to update addon outfits');
     }
   };
 
@@ -525,7 +525,7 @@ const Settings = ({ onLogout }) => {
       await fetchOutfitTypes();
     } catch (err) {
       console.error('Error adding outfit type:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to add outfit type');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to add outfit type');
     }
   };
 
@@ -535,7 +535,7 @@ const Settings = ({ onLogout }) => {
       await fetchOutfitTypes();
     } catch (err) {
       console.error('Error deleting outfit type:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to delete outfit type');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to delete outfit type');
     }
   };
 
@@ -792,7 +792,7 @@ const Settings = ({ onLogout }) => {
       setTransactions(parseTransactionList(accountingData));
     } catch (err) {
       console.error('Error fetching finance data:', err);
-      setFinanceError(err.response.data.Message || 'Failed to fetch finance data');
+      setFinanceError((err?.response?.data?.Message || err?.message) || 'Failed to fetch finance data');
     } finally {
       setFinanceLoading(false);
     }
@@ -820,7 +820,7 @@ const Settings = ({ onLogout }) => {
       await fetchFinanceData();
     } catch (err) {
       console.error('Error deleting finance type:', err);
-      setFinanceError(err.response.data.Message || 'Failed to delete type');
+      setFinanceError((err?.response?.data?.Message || err?.message) || 'Failed to delete type');
     }
   };
 
@@ -853,7 +853,7 @@ const Settings = ({ onLogout }) => {
       setBankList(banksData || []);
     } catch (err) {
       console.error('Error fetching bank details:', err);
-      setBankError(err.response.data.Message || 'Failed to fetch bank details');
+      setBankError((err?.response?.data?.Message || err?.message) || 'Failed to fetch bank details');
     } finally {
       setBankLoading(false);
     }
@@ -868,7 +868,7 @@ const Settings = ({ onLogout }) => {
       return true;
     } catch (err) {
       console.error('Error saving bank details:', err);
-      alert('Failed to save bank details: ' + err.response.data.Message);
+      alert('Failed to save bank details: ' + (err?.response?.data?.Message || err?.message));
       return false;
     }
   };
@@ -880,7 +880,7 @@ const Settings = ({ onLogout }) => {
         await fetchBankDetails();
       } catch (err) {
         console.error('Error deleting bank details:', err);
-        alert('Failed to delete bank details: ' + err.response.data.Message);
+        alert('Failed to delete bank details: ' + (err?.response?.data?.Message || err?.message));
       }
     }
   };
@@ -1040,7 +1040,7 @@ const Settings = ({ onLogout }) => {
       setNewFieldRequired(false);
     } catch (err) {
       console.error('Error adding measurement field:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to add field');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to add field');
     }
   };
 
@@ -1096,7 +1096,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error deleting measurement field:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to delete field');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to delete field');
     }
   };
 
@@ -1168,7 +1168,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error toggling field required:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to update field');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to update field');
     }
   };
 
@@ -1205,7 +1205,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error deleting subcategory:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to delete subcategory');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to delete subcategory');
     }
   };
 
@@ -1243,7 +1243,7 @@ const Settings = ({ onLogout }) => {
       console.log('Subcategory saved:', subcategoryName, 'to', selectedOutfit);
     } catch (err) {
       console.error('Error saving subcategory:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to save subcategory');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to save subcategory');
     }
   };
 
@@ -1342,7 +1342,7 @@ const Settings = ({ onLogout }) => {
       }
     } catch (err) {
       console.error('Error updating field unit:', err);
-      setOutfitTypesError(err.response.data.Message || 'Failed to update field unit');
+      setOutfitTypesError((err?.response?.data?.Message || err?.message) || 'Failed to update field unit');
     }
   };
 

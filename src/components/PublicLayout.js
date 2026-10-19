@@ -22,7 +22,7 @@ const PublicLayout = ({ children }) => {
             Handcrafted Indian Silhouettes & Custom Bridal Stitching in Surat
           </span>
           <div className="public-topbar-contact">
-            <a href="tel:+919825000000"><FiPhone /> +91 98250 00000</a>
+            <a href="tel:+919825123456"><FiPhone /> +91 98251 23456</a>
           </div>
         </div>
       </div>
@@ -114,7 +114,7 @@ const PublicLayout = ({ children }) => {
                   Book Atelier Appointment <FiArrowRight />
                 </Link>
                 <a
-                  href="https://api.whatsapp.com/send?phone=919825000000&text=Hello%20Naari%20Art,%20I%20would%20like%20to%20inquire%20about%20couture%20stitching."
+                  href="https://api.whatsapp.com/send?phone=919825123456&text=Hello%20Naari%20Art,%20I%20would%20like%20to%20inquire%20about%20couture%20stitching."
                   target="_blank"
                   rel="noreferrer"
                   className="public-button secondary"
@@ -183,7 +183,7 @@ const PublicLayout = ({ children }) => {
             </div>
             <div className="footer-contact-item">
               <FiPhone className="footer-icon" />
-              <p><a href="tel:+919825000000">+91 98250 00000</a></p>
+              <p><a href="tel:+919825123456">+91 98251 23456</a></p>
             </div>
             <div className="footer-contact-item">
               <FiMail className="footer-icon" />

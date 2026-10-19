@@ -1,6 +1,9 @@
 // WhatsApp Utility for Naari Art
 // Generates beautifully formatted messages and opens WhatsApp Web/Mobile
 
+export const STUDIO_PHONE = '919825123456';
+export const STUDIO_DISPLAY_PHONE = '+91 98251 23456';
+
 export const cleanPhoneNumber = (phone) => {
   if (!phone) return '';
   let cleaned = phone.toString().replace(/[^0-9]/g, '');

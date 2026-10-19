@@ -196,7 +196,7 @@ const AddEditCustomer = ({ onLogout }) => {
       await customerAPI.saveCustomer(payload);
       navigate('/customers');
     } catch (err) {
-      setError(err.response.data.Message || 'Failed to save customer');
+      setError((err?.response?.data?.Message || err?.message) || 'Failed to save customer');
       console.error(err);
     } finally {
       setSaving(false);

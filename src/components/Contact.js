@@ -124,7 +124,7 @@ const Contact = () => {
                   <div className="info-icon"><FiPhone /></div>
                   <div>
                     <strong>Telephone & WhatsApp</strong>
-                    <p><a href="tel:+919825000000">+91 98250 00000</a></p>
+                    <p><a href="tel:+919825123456">+91 98251 23456</a></p>
                     <small>Direct line to atelier stylists</small>
                   </div>
                 </div>

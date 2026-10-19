@@ -46,7 +46,7 @@ const ViewOrder = ({ onLogout }) => {
       setOrder(response);
     } catch (err) {
       console.error('Error fetching order:', err);
-      setError(err.response.data.Message || 'Failed to fetch order');
+      setError((err?.response?.data?.Message || err?.message) || 'Failed to fetch order');
     } finally {
       setLoading(false);
     }
